@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth overflow-x-hidden">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Mathematical Concepts | Institute & Digital Registry</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- KaTeX for crisp mathematical typography -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f0fdfa',
+                            100: '#ccfbf1',
+                            400: '#2dd4bf',
+                            500: '#14b8a6',
+                            600: '#0d9488',
+                            900: '#134e4a',
+                            glow: '#5eead4'
+                        },
+                        cosmos: {
+                            800: '#0f172a',
+                            900: '#090d16',
+                            950: '#040711'
+                        },
+                        accent: {
+                            indigo: '#6366f1',
+                            violet: '#8b5cf6',
+                            cyan: '#06b6d4',
+                            amber: '#f59e0b',
+                            rose: '#f43f5e'
+                        }
+                    },
+                    fontFamily: {
+                        mono: ['JetBrains Mono', 'Fira Code', 'Menlo', 'monospace'],
+                        sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom scrollbar and ambient mathematical styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #090d16;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1e293b;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #0d9488;
+        }
+
+        .math-glass {
+            background: rgba(15, 23, 42, 0.78);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .math-glass-active {
+            background: rgba(20, 184, 166, 0.08);
+            border: 1px solid rgba(45, 212, 191, 0.4);
+            box-shadow: 0 0 25px rgba(20, 184, 166, 0.15);
+        }
+
+        .grid-pattern {
+            background-size: 36px 36px;
+            background-image: 
+                linear-gradient(to right, rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+        }
+
+        .glow-text {
+            text-shadow: 0 0 16px rgba(45, 212, 191, 0.45);
+        }
+    </style>
+</head>
+<body class="bg-cosmos-950 text-slate-200 font-sans min-h-screen selection:bg-brand-500 selection:text-black grid-pattern flex flex-col justify-between overflow-x-hidden">
+
+    <!-- Primary Top Navigation -->
+    <header class="sticky top-0 z-50 math-glass border-b border-slate-800/80 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <!-- Brand Identity -->
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-600 via-accent-indigo to-brand-glow p-[1.5px] shadow-lg shadow-brand-500/20">
+                    <div class="w-full h-full bg-cosmos-950 rounded-[10px] flex items-center justify-center">
+                        <span class="text-brand-400 font-mono font-extrabold text-lg">&nabla;</span>
+                    </div>
+                </div>
+                <div>
+                    <span class="font-bold tracking-wider text-base sm:text-lg text-white font-mono flex items-center gap-2">
+                        <span>NEW-MATHEMATICAL-CONCEPTS</span><span class="text-[10px] uppercase px-1.5 py-0.5 rounded bg-brand-900/60 text-brand-300 border border-brand-500/30">ORG</span>
+                    </span>
+                    <p class="text-[11px] text-slate-400 tracking-tight">Foundational Research Archive &amp; Computational Atlas</p>
+                </div>
+            </div>
+
+            <!-- Navigation Links -->
+            <nav class="hidden md:flex items-center space-x-1 lg:space-x-2 text-sm font-medium">
+                <a href="#roadmap" class="px-3 py-2 rounded-lg text-slate-300 hover:text-white hover:bg-slate-800/60 transition">The 6 Concepts</a>
+                <a href="#schedule" class="px-3 py-2 rounded-lg text-slate-300 hover:text-white hover:bg-slate-800/60 transition">Release Schedule</a>
+            </nav>
+
+            <!-- Action Button -->
+            <div class="flex items-center space-x-3">
+                <button onclick="openIngestionModal()" class="px-3.5 py-2 rounded-xl text-xs font-mono font-bold bg-brand-500/10 text-brand-300 border border-brand-500/30 hover:bg-brand-500 hover:text-cosmos-950 transition">
+                    + Ingest Note
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Container (Pure Vertical Progression) -->
+    <main class="flex-grow w-full overflow-x-hidden flex flex-col">
+        <!-- Foundational Epigraph -->
+        <section class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-4 w-full">
+            <div class="math-glass rounded-2xl p-6 sm:p-7 border border-brand-500/30 relative overflow-hidden shadow-xl bg-gradient-to-r from-cosmos-950 via-slate-900/90 to-cosmos-950">
+                <div class="absolute -left-10 -bottom-10 w-44 h-44 bg-brand-500/10 rounded-full blur-2xl pointer-events-none"></div>
+                <div class="flex items-start gap-4">
+                    <span class="text-3xl sm:text-4xl text-brand-400 font-serif leading-none select-none opacity-80">&ldquo;</span>
+                    <div class="space-y-3">
+                        <blockquote class="text-sm sm:text-base text-slate-200 italic leading-relaxed font-sans">
+                            I believe that mathematics is one way the human mind can create concepts. In many ways mathematics plays a role that philosophy could have played in creating concepts that then can be used in the real world. It takes time for them to evolve and be used in the real world, but the real factory is mathematics.
+                        </blockquote>
+                        <div class="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-slate-800 text-xs font-mono">
+                            <span class="text-brand-300 font-medium tracking-wide flex items-center gap-2">
+                                <span class="w-1.5 h-1.5 rounded-full bg-brand-400"></span>
+                                Alain Connes <span class="text-slate-500">&bull; Fields Medalist, Noncommutative Geometry</span>
+                            </span>
+                            <a href="https://doi.org/10.1515/9781400832880" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-brand-400 hover:text-brand-300 transition underline underline-offset-4 decoration-brand-500/40 hover:decoration-brand-300" title="Mathematicians: An Outer View of the Inner World (Princeton University Press)">
+                                <span class="text-slate-400">Source:</span> DOI: 10.1515/9781400832880
+                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Hero Section -->
+        <section class="relative overflow-hidden pt-12 pb-16 lg:pt-16 lg:pb-24 border-b border-slate-800/80">
+            <!-- Background luminous ambient spheres -->
+            <div class="absolute top-1/4 left-1/3 -translate-x-1/2 -translate-y-1/2 w-[420px] h-[420px] bg-brand-500/10 rounded-full blur-3xl pointer-events-none"></div>
+            <div class="absolute top-1/3 right-1/4 w-80 h-80 bg-accent-indigo/10 rounded-full blur-3xl pointer-events-none"></div>
+
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+                    
+                    <!-- Left: Project Narrative -->
+                    <div class="lg:col-span-7 space-y-6">
+                        <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-900/90 border border-brand-500/30 text-xs text-brand-300 font-mono">
+                            <span class="w-2 h-2 rounded-full bg-brand-400 animate-ping"></span>
+                            <span>The Ordered Six-Pillar Program &bull; 2026 Archive</span>
+                        </div>
+                        
+                        <h1 class="text-3xl sm:text-5xl lg:text-5xl font-extrabold tracking-tight text-white leading-tight">
+                            From Discrete Foliations <br/>
+                            <span class="bg-clip-text text-transparent bg-gradient-to-r from-brand-400 via-teal-200 to-accent-indigo glow-text">
+                                to Arithmetic Holography
+                            </span>
+                        </h1>
+
+                        <p class="text-base text-slate-400 max-w-2xl leading-relaxed">
+                            A systematic re-examination of the foundations of arithmetic, topology, and the continuum. We present six novel mathematical concepts scheduled for formal release in two chronological waves: October 2026 and December 2026.
+                        </p>
+
+                        <!-- Concept Quick Pill Indicators with Dates -->
+                        <div class="flex flex-wrap gap-2 pt-2">
+                            <span class="text-xs font-mono px-2.5 py-1 rounded bg-brand-950/80 border border-brand-500/40 text-brand-300">
+                                1. Foliations of Integers <span class="text-brand-400 font-bold ml-1">&bull; Oct 2026</span>
+                            </span>
+                            <span class="text-xs font-mono px-2.5 py-1 rounded bg-brand-950/80 border border-brand-500/40 text-brand-300">
+                                2. The General Number Line: Discrete Foliation of the Continuum <span class="text-brand-400 font-bold ml-1">&bull; Oct 2026</span>
+                            </span>
+                            <span class="text-xs font-mono px-2.5 py-1 rounded bg-brand-950/80 border border-brand-500/40 text-brand-300">
+                                3. The Arithmetic Holographic Principle &amp; Conjecture <span class="text-brand-400 font-bold ml-1">&bull; Oct 2026</span>
+                            </span>
+                            <span class="text-xs font-mono px-2.5 py-1 rounded bg-slate-900/90 border border-amber-500/30 text-amber-300">
+                                4. Balanced and Eccentric Integers <span class="text-amber-400 font-bold ml-1">&bull; Dec 2026</span>
+                            </span>
+                            <span class="text-xs font-mono px-2.5 py-1 rounded bg-slate-900/90 border border-teal-500/30 text-teal-300">
+                                5. Microscopy Of Integers <span class="text-teal-400 font-bold ml-1">&bull; Dec 2026</span>
+                            </span>
+                            <span class="text-xs font-mono px-2.5 py-1 rounded bg-slate-900/90 border border-rose-500/30 text-rose-300">
+                                6. The Last Resort Addition <span class="text-rose-400 font-bold ml-1">&bull; Dec 2026</span>
+                            </span>
+                        </div>
+
+                        <div class="flex flex-wrap items-center gap-4 pt-3">
+                            <a href="#roadmap" class="px-6 py-3 rounded-xl font-semibold text-sm bg-brand-500 text-cosmos-950 hover:bg-brand-400 transition shadow-lg shadow-brand-500/25 flex items-center gap-2">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                                Explore Concepts &amp; Dates
+                            </a>
+                            <a href="#schedule" class="px-6 py-3 rounded-xl font-semibold text-sm bg-slate-900 hover:bg-slate-800 border border-slate-700 text-white transition flex items-center gap-2">
+                                View Release Schedule &rarr;
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Right: Release Timeline Board (Pure Typography & Structure, No Images/Simulations) -->
+                    <div class="lg:col-span-5">
+                        <div class="relative rounded-2xl p-6 bg-gradient-to-b from-slate-800/80 via-cosmos-900 to-cosmos-950 border border-slate-700/70 shadow-2xl space-y-5">
+                            <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+                                <span class="text-xs font-mono font-bold text-white uppercase tracking-wider flex items-center gap-2">
+                                    <span class="w-2 h-2 rounded-full bg-brand-400"></span>
+                                    Publication Schedule
+                                </span>
+                                <span class="text-[11px] font-mono text-brand-400 px-2 py-0.5 rounded bg-brand-950 border border-brand-800">
+                                    Colloquium 2026
+                                </span>
+                            </div>
+
+                            <!-- Wave 1: October 2026 -->
+                            <div class="p-4 rounded-xl bg-cosmos-950/80 border border-brand-500/30 space-y-2">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-xs font-bold font-mono text-brand-300">Phase 1 &bull; Release</span>
+                                    <span class="text-xs font-mono font-bold px-2 py-0.5 rounded bg-brand-500 text-cosmos-950">
+                                        October 2026
+                                    </span>
+                                </div>
+                                <ul class="text-xs font-mono text-slate-400 space-y-1 pl-1 pt-1">
+                                    <li class="flex items-center gap-1.5"><span class="text-brand-400 font-bold">01.</span> Foliations of Integers</li>
+                                    <li class="flex items-center gap-1.5"><span class="text-brand-400 font-bold">02.</span> The General Number Line: Discrete Foliation of the Continuum</li>
+                                    <li class="flex items-center gap-1.5"><span class="text-brand-400 font-bold">03.</span> The Arithmetic Holographic Principle &amp; Conjecture</li>
+                                </ul>
+                            </div>
+
+                            <!-- Wave 2: December 2026 -->
+                            <div class="p-4 rounded-xl bg-cosmos-950/80 border border-slate-700/80 space-y-2">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-xs font-bold font-mono text-amber-300">Phase 2 &bull; Release</span>
+                                    <span class="text-xs font-mono font-bold px-2 py-0.5 rounded bg-amber-400 text-cosmos-950">
+                                        December 2026
+                                    </span>
+                                </div>
+                                <ul class="text-xs font-mono text-slate-400 space-y-1 pl-1 pt-1">
+                                    <li class="flex items-center gap-1.5"><span class="text-amber-400 font-bold">04.</span> Balanced and Eccentric Integers</li>
+                                    <li class="flex items-center gap-1.5"><span class="text-teal-400 font-bold">05.</span> Microscopy Of Integers</li>
+                                    <li class="flex items-center gap-1.5"><span class="text-rose-400 font-bold">06.</span> The Last Resort Addition</li>
+                                </ul>
+                            </div>
+
+                            <div class="pt-2 flex items-center justify-between text-[11px] font-mono text-slate-500">
+                                <span>Official Archive Registry</span>
+                                <span class="text-slate-400">Sequential Ingestion Active</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- The 6 Concepts Sequential Roadmap Section -->
+        <section id="roadmap" class="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-3xl mx-auto text-center mb-16">
+                <span class="text-xs font-bold uppercase tracking-widest text-brand-400 font-mono">Sequential Architecture</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-white mt-1">The Six Foundational Concepts</h2>
+                <p class="text-slate-400 text-sm mt-3 leading-relaxed">
+                    Introduced in order of logical construction with scheduled formalization milestones: Concepts 1 to 3 debuting in October 2026, followed by Concepts 4 to 6 in December 2026.
+                </p>
+            </div>
+
+            <!-- Concept Cards Grid with Prominent Release Dates -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+                <!-- 1. Foliations of Integers -->
+                <div class="math-glass math-glass-active rounded-2xl p-6 flex flex-col justify-between group transition-all duration-300">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="w-9 h-9 rounded-xl bg-brand-500/20 text-brand-400 font-mono font-extrabold text-sm flex items-center justify-center border border-brand-500/40">
+                                01
+                            </span>
+                            <span class="text-[11px] font-mono font-bold px-2.5 py-1 rounded bg-brand-500/20 text-brand-300 border border-brand-400/50 shadow-sm">
+                                Release: October 2026
+                            </span>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2 group-hover:text-brand-300 transition">
+                            Foliations of Integers
+                        </h3>
+                        <p class="text-slate-300 text-xs leading-relaxed mb-4">
+                            A geometric framework that restructures the classical 1D number line into a 2D discrete, quantized causal manifold bounded by perfect squares.
+                        </p>
+                        <div class="bg-cosmos-950 p-3 rounded-lg border border-slate-800 font-mono text-xs text-brand-300 mb-4 overflow-x-auto">
+                            $$\nabla_\gamma(n, s) = n + 2s\lfloor\sqrt{n}\rfloor + s^2 + \gamma s$$
+                        </div>
+                    </div>
+                    <div class="pt-4 border-t border-slate-800 flex items-center justify-between text-xs">
+                        <span class="text-slate-400 font-mono">Discrete Transport Operator</span>
+                        <span class="text-brand-400 font-mono font-semibold">Phase 1 &bull; Oct 2026</span>
+                    </div>
+                </div>
+
+                <!-- 2. The General Number Line: Discrete Foliation of the Continuum -->
+                <div class="math-glass rounded-2xl p-6 border border-slate-800 flex flex-col justify-between group transition-all duration-300">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="w-9 h-9 rounded-xl bg-slate-800 text-slate-300 font-mono font-extrabold text-sm flex items-center justify-center border border-slate-700">
+                                02
+                            </span>
+                            <span class="text-[11px] font-mono font-bold px-2.5 py-1 rounded bg-cyan-950 text-cyan-300 border border-cyan-500/40 shadow-sm">
+                                Release: October 2026
+                            </span>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-3 group-hover:text-cyan-300 transition leading-snug">
+                            The General Number Line: Discrete Foliation of the Continuum
+                        </h3>
+                        <div class="p-4 rounded-xl bg-cosmos-950/60 border border-slate-800/80 font-mono text-xs text-slate-400 leading-relaxed mb-4">
+                            Scheduled for formal release in October 2026. Definitions and equations to be introduced.
+                        </div>
+                    </div>
+                    <div class="pt-4 border-t border-slate-800 flex items-center justify-between text-xs">
+                        <span class="text-slate-500 font-mono">Status: In Progress</span>
+                        <span class="text-cyan-400 font-mono font-semibold">Phase 1 &bull; Oct 2026</span>
+                    </div>
+                </div>
+
+                <!-- 3. The Arithmetic Holographic Principle & Conjecture -->
+                <div class="math-glass rounded-2xl p-6 border border-slate-800 flex flex-col justify-between group transition-all duration-300">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="w-9 h-9 rounded-xl bg-slate-800 text-slate-300 font-mono font-extrabold text-sm flex items-center justify-center border border-slate-700">
+                                03
+                            </span>
+                            <span class="text-[11px] font-mono font-bold px-2.5 py-1 rounded bg-indigo-950 text-indigo-300 border border-indigo-500/40 shadow-sm">
+                                Release: October 2026
+                            </span>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-3 group-hover:text-indigo-300 transition leading-snug">
+                            The Arithmetic Holographic Principle &amp; Conjecture
+                        </h3>
+                        <div class="p-4 rounded-xl bg-cosmos-950/60 border border-slate-800/80 font-mono text-xs text-slate-400 leading-relaxed mb-4">
+                            Scheduled for formal release in October 2026. Definitions and equations to be introduced.
+                        </div>
+                    </div>
+                    <div class="pt-4 border-t border-slate-800 flex items-center justify-between text-xs">
+                        <span class="text-slate-500 font-mono">Status: In Progress</span>
+                        <span class="text-indigo-400 font-mono font-semibold">Phase 1 &bull; Oct 2026</span>
+                    </div>
+                </div>
+
+                <!-- 4. Balanced and Eccentric Integers -->
+                <div class="math-glass rounded-2xl p-6 border border-slate-800 flex flex-col justify-between group transition-all duration-300">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="w-9 h-9 rounded-xl bg-slate-800 text-slate-300 font-mono font-extrabold text-sm flex items-center justify-center border border-slate-700">
+                                04
+                            </span>
+                            <span class="text-[11px] font-mono font-bold px-2.5 py-1 rounded bg-amber-950 text-amber-300 border border-amber-500/40 shadow-sm">
+                                Release: December 2026
+                            </span>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-3 group-hover:text-amber-300 transition leading-snug">
+                            Balanced and Eccentric Integers
+                        </h3>
+                        <div class="p-4 rounded-xl bg-cosmos-950/60 border border-slate-800/80 font-mono text-xs text-slate-400 leading-relaxed mb-4">
+                            Scheduled for formal release in December 2026. Definitions and equations to be introduced.
+                        </div>
+                    </div>
+                    <div class="pt-4 border-t border-slate-800 flex items-center justify-between text-xs">
+                        <span class="text-slate-500 font-mono">Status: In Progress</span>
+                        <span class="text-amber-400 font-mono font-semibold">Phase 2 &bull; Dec 2026</span>
+                    </div>
+                </div>
+
+                <!-- 5. Microscopy Of Integers -->
+                <div class="math-glass rounded-2xl p-6 border border-slate-800 flex flex-col justify-between group transition-all duration-300">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="w-9 h-9 rounded-xl bg-slate-800 text-slate-300 font-mono font-extrabold text-sm flex items-center justify-center border border-slate-700">
+                                05
+                            </span>
+                            <span class="text-[11px] font-mono font-bold px-2.5 py-1 rounded bg-teal-950 text-teal-300 border border-teal-500/40 shadow-sm">
+                                Release: December 2026
+                            </span>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-3 group-hover:text-teal-300 transition leading-snug">
+                            Microscopy Of Integers
+                        </h3>
+                        <div class="p-4 rounded-xl bg-cosmos-950/60 border border-slate-800/80 font-mono text-xs text-slate-400 leading-relaxed mb-4">
+                            Scheduled for formal release in December 2026. Definitions and equations to be introduced.
+                        </div>
+                    </div>
+                    <div class="pt-4 border-t border-slate-800 flex items-center justify-between text-xs">
+                        <span class="text-slate-500 font-mono">Status: In Progress</span>
+                        <span class="text-teal-400 font-mono font-semibold">Phase 2 &bull; Dec 2026</span>
+                    </div>
+                </div>
+
+                <!-- 6. The Last Resort Addition -->
+                <div class="math-glass rounded-2xl p-6 border border-slate-800 flex flex-col justify-between group transition-all duration-300">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="w-9 h-9 rounded-xl bg-slate-800 text-slate-300 font-mono font-extrabold text-sm flex items-center justify-center border border-slate-700">
+                                06
+                            </span>
+                            <span class="text-[11px] font-mono font-bold px-2.5 py-1 rounded bg-rose-950 text-rose-300 border border-rose-500/40 shadow-sm">
+                                Release: December 2026
+                            </span>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-3 group-hover:text-rose-300 transition leading-snug">
+                            The Last Resort Addition
+                        </h3>
+                        <div class="p-4 rounded-xl bg-cosmos-950/60 border border-slate-800/80 font-mono text-xs text-slate-400 leading-relaxed mb-4">
+                            Scheduled for formal release in December 2026. Definitions and equations to be introduced.
+                        </div>
+                    </div>
+                    <div class="pt-4 border-t border-slate-800 flex items-center justify-between text-xs">
+                        <span class="text-slate-500 font-mono">Status: In Progress</span>
+                        <span class="text-rose-400 font-mono font-semibold">Phase 2 &bull; Dec 2026</span>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Concept 01 Comprehensive Exposition & Operator Workbench -->
+            <div class="mt-16 math-glass rounded-3xl p-6 sm:p-10 border border-brand-500/30 space-y-8 relative overflow-hidden">
+                <div class="absolute -right-20 -top-20 w-96 h-96 bg-brand-500/5 rounded-full blur-3xl pointer-events-none"></div>
+
+                <!-- Section Header -->
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-800/80 pb-6">
+                    <div>
+                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-950 border border-brand-500/40 text-brand-300 font-mono text-xs mb-2">
+                    <span class="w-2 h-2 rounded-full bg-brand-400"></span>
+                    <span>Concept 01 &bull; Formal Inception</span>
+                </div>
+                <h3 class="text-2xl sm:text-3xl font-extrabold text-white">
+                    Foliations of Integers
+                </h3>
+                <p class="text-xs sm:text-sm text-slate-400 mt-1 font-mono">
+                    Geometrization of Integers &bull; Scheduled Release: October 2026
+                </p>
+            </div>
+
+            <div class="flex items-center gap-3">
+                        <span class="px-3.5 py-1.5 rounded-xl font-mono text-xs font-bold bg-brand-500/10 text-brand-300 border border-brand-500/30">
+                            Gauge Group: &gamma; &in; {0, 1, 2}
+                        </span>
+                    </div>
+                </div>
+
+                <!-- The 4 Core Foundational Statements -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    <div class="p-5 rounded-2xl bg-cosmos-950/80 border border-slate-800/90 space-y-2.5">
+                        <div class="flex items-center gap-2 text-brand-400 font-mono text-xs font-bold uppercase tracking-wider">
+                            <span class="w-1.5 h-1.5 rounded-full bg-brand-400"></span>
+                            I. 2D Quantized Causal Manifold
+                        </div>
+                        <p class="text-slate-300 text-sm leading-relaxed">
+                            A geometric framework that restructures the classical 1D number line into a <strong>2D discrete, quantized causal manifold</strong>.
+                        </p>
+                    </div>
+
+                    <div class="p-5 rounded-2xl bg-cosmos-950/80 border border-slate-800/90 space-y-2.5">
+                        <div class="flex items-center gap-2 text-cyan-400 font-mono text-xs font-bold uppercase tracking-wider">
+                            <span class="w-1.5 h-1.5 rounded-full bg-cyan-400"></span>
+                            II. Macroscopic Causal Shells
+                        </div>
+                        <p class="text-slate-300 text-sm leading-relaxed">
+                            Every integer is localized within a macroscopic <strong>"causal shell" bounded by perfect squares</strong> and defined by an intrinsic generator and causal depth.
+                        </p>
+                    </div>
+
+                    <div class="p-5 rounded-2xl bg-cosmos-950/80 border border-slate-800/90 space-y-2.5">
+                        <div class="flex items-center gap-2 text-amber-400 font-mono text-xs font-bold uppercase tracking-wider">
+                            <span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
+                            III. Rupture of Classical Addition
+                        </div>
+                        <p class="text-slate-300 text-sm leading-relaxed">
+                            Within this topology, classical scalar addition <strong>mathematically ruptures at the square boundaries</strong>, proving to be merely a localized, intra-shell illusion.
+                        </p>
+                    </div>
+
+                    <div class="p-5 rounded-2xl bg-cosmos-950/80 border border-slate-800/90 space-y-2.5">
+                        <div class="flex items-center gap-2 text-indigo-400 font-mono text-xs font-bold uppercase tracking-wider">
+                            <span class="w-1.5 h-1.5 rounded-full bg-indigo-400"></span>
+                            IV. Geodesic Bulk Traversal
+                        </div>
+                        <p class="text-slate-300 text-sm leading-relaxed">
+                            Consequently, arithmetic multiplication and bulk traversal are redefined as <strong>pure geometric geodesics</strong> navigated entirely by discrete transport operators.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- The Discrete Transport Operator Formal Presentation -->
+                <div class="rounded-2xl bg-gradient-to-r from-cosmos-950 via-slate-900 to-cosmos-950 border border-brand-500/40 p-6 sm:p-8 space-y-4 shadow-xl">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-800/90 pb-3">
+                        <span class="text-xs font-mono font-bold uppercase tracking-widest text-brand-300">
+                            Foundational Mathematical Engine
+                        </span>
+                        <span class="text-xs font-mono text-slate-400">
+                            Invariant Shell Propagation Form
+                        </span>
+                    </div>
+
+                    <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
+                        The foundational engine that weaves the entire geometry of this foliation is the <strong>discrete transport operator</strong>, which propels an integer state $n$ across $s$ causal shells under a native topological gauge $\gamma \in \{0, 1, 2\}$:
+                    </p>
+
+                    <!-- Prominent KaTeX Equation Callout -->
+                    <div class="py-4 px-6 rounded-xl bg-cosmos-950 border border-brand-500/50 shadow-inner flex items-center justify-center overflow-x-auto text-brand-300">
+                        <div class="text-lg sm:text-2xl font-mono">
+                            $$\nabla_\gamma(n, s) = n + 2s\lfloor\sqrt{n}\rfloor + s^2 + \gamma s$$
+                        </div>
+                    </div>
+
+                    <!-- Term Breakdown Grid -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 pt-2 font-mono text-xs">
+                        <div class="p-3 rounded-lg bg-slate-950/60 border border-slate-800 text-slate-300">
+                            <span class="text-brand-400 font-bold block mb-1">$n \in \mathbb{Z}$</span>
+                            Initial localized integer state within source causal shell.
+                        </div>
+                        <div class="p-3 rounded-lg bg-slate-950/60 border border-slate-800 text-slate-300">
+                            <span class="text-brand-400 font-bold block mb-1">$s \in \mathbb{Z}$</span>
+                            Macroscopic shell transition quantum / displacement index.
+                        </div>
+                        <div class="p-3 rounded-lg bg-slate-950/60 border border-slate-800 text-slate-300">
+                            <span class="text-brand-400 font-bold block mb-1">$\lfloor\sqrt{n}\rfloor$</span>
+                            Intrinsic shell generator: defines bounding perfect square $k^2 \le n$.
+                        </div>
+                        <div class="p-3 rounded-lg bg-slate-950/60 border border-slate-800 text-slate-300">
+                            <span class="text-brand-400 font-bold block mb-1">$\gamma \in \{0, 1, 2\}$</span>
+                            Topological gauge preserving modular transversality along boundary ruptures.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Interactive Discrete Transport Operator Numerical Workbench (Canvas-Free) -->
+                <div class="rounded-2xl bg-cosmos-950/90 border border-slate-800 p-6 sm:p-8 space-y-6">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-800 pb-3">
+                        <div>
+                            <h4 class="text-base font-bold text-white font-mono flex items-center gap-2">
+                                <span class="w-2 h-2 rounded-full bg-brand-400"></span>
+                                Discrete Transport Operator Evaluator
+                            </h4>
+                            <p class="text-xs text-slate-400">
+                                Verify shell leaping mechanics across square boundaries in real time.
+                            </p>
+                        </div>
+                        <span class="text-[11px] font-mono text-brand-400 bg-brand-950 px-2.5 py-1 rounded border border-brand-800">
+                            Algebraic Verification Engine
+                        </span>
+                    </div>
+
+                    <!-- Input Controls -->
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                        <div>
+                            <label class="block text-xs font-mono text-slate-400 mb-1" for="calcN">
+                                State Integer $n$
+                            </label>
+                            <input id="calcN" type="number" min="0" max="1000000" value="17" oninput="runTransportCalc()" class="w-full bg-cosmos-900 border border-slate-800 rounded-xl px-3 py-2 text-sm text-white font-mono focus:outline-none focus:border-brand-500">
+                            <span class="text-[10px] font-mono text-slate-500 mt-1 block">Shell boundary: $16 \le n < 25$</span>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-mono text-slate-400 mb-1" for="calcS">
+                                Shell Shift Quantum $s$
+                            </label>
+                            <input id="calcS" type="number" min="-50" max="50" value="2" oninput="runTransportCalc()" class="w-full bg-cosmos-900 border border-slate-800 rounded-xl px-3 py-2 text-sm text-white font-mono focus:outline-none focus:border-brand-500">
+                            <span class="text-[10px] font-mono text-slate-500 mt-1 block">Number of shell hops</span>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-mono text-slate-400 mb-1" for="calcGamma">
+                                Topological Gauge $\gamma$
+                            </label>
+                            <select id="calcGamma" onchange="runTransportCalc()" class="w-full bg-cosmos-900 border border-slate-800 rounded-xl px-3 py-2 text-sm text-white font-mono focus:outline-none focus:border-brand-500">
+                                <option value="0">&gamma; = 0 (Base Geodesic)</option>
+                                <option value="1">&gamma; = 1 (Transverse Foliation)</option>
+                                <option value="2">&gamma; = 2 (Upper Boundary Holonomy)</option>
+                            </select>
+                            <span class="text-[10px] font-mono text-slate-500 mt-1 block">Internal gauge selection</span>
+                        </div>
+                    </div>
+
+                    <!-- Live Calculation Output Table -->
+                    <div id="calcResultsBox" class="p-5 rounded-xl bg-cosmos-900/80 border border-brand-500/30 font-mono text-xs space-y-3">
+                        <!-- Populated by runTransportCalc() -->
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Program Release Milestones & Chronological Structure -->
+        <section id="schedule" class="py-20 bg-cosmos-900/90 border-y border-slate-800">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                
+                <div class="max-w-3xl mb-12">
+                    <span class="text-xs font-bold uppercase tracking-widest text-brand-400 font-mono">Release Architecture</span>
+                    <h2 class="text-3xl sm:text-4xl font-extrabold text-white mt-1">Chronological Milestone Schedule</h2>
+                    <p class="text-slate-400 text-xs sm:text-sm mt-2 leading-relaxed">
+                        A structured breakdown of the six concepts into two primary publication waves in 2026.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    
+                    <!-- Wave 1 Detailed Block -->
+                    <div class="math-glass rounded-2xl p-6 sm:p-8 border border-brand-500/30 space-y-6">
+                        <div class="flex items-center justify-between border-b border-slate-800 pb-4">
+                            <div>
+                                <span class="text-xs font-mono font-bold uppercase tracking-wider text-brand-400">Phase 1 &bull; Primary Release</span>
+                                <h3 class="text-2xl font-bold text-white mt-0.5">October 2026</h3>
+                            </div>
+                            <span class="px-3 py-1 rounded-lg text-xs font-mono font-bold bg-brand-500 text-cosmos-950">
+                                3 Concepts
+                            </span>
+                        </div>
+
+                        <div class="space-y-3 text-xs sm:text-sm">
+                            <div class="p-4 rounded-xl bg-cosmos-950/70 border border-brand-500/30">
+                                <div class="flex items-center justify-between mb-1">
+                                    <span class="font-bold text-white font-mono text-xs">1. Foliations of Integers</span>
+                                    <span class="text-[10px] font-mono text-brand-400">Formulated</span>
+                                </div>
+                                <p class="text-slate-400 text-xs leading-relaxed">
+                                    2D discrete causal manifold bounded by perfect squares; discrete transport operator $\nabla_\gamma(n, s)$.
+                                </p>
+                            </div>
+
+                            <div class="p-4 rounded-xl bg-cosmos-950/70 border border-slate-800">
+                                <div class="flex items-center justify-between">
+                                    <span class="font-bold text-white font-mono text-xs">2. The General Number Line: Discrete Foliation of the Continuum</span>
+                                    <span class="text-[10px] font-mono text-cyan-400">Oct 2026</span>
+                                </div>
+                            </div>
+
+                            <div class="p-4 rounded-xl bg-cosmos-950/70 border border-slate-800">
+                                <div class="flex items-center justify-between">
+                                    <span class="font-bold text-white font-mono text-xs">3. The Arithmetic Holographic Principle &amp; Conjecture</span>
+                                    <span class="text-[10px] font-mono text-indigo-400">Oct 2026</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="pt-2 text-slate-500 font-mono text-[11px] flex justify-between items-center">
+                            <span>Sequential Release Track</span>
+                            <span class="text-brand-400">October 2026</span>
+                        </div>
+                    </div>
+
+                    <!-- Wave 2 Detailed Block -->
+                    <div class="math-glass rounded-2xl p-6 sm:p-8 border border-amber-500/30 space-y-6">
+                        <div class="flex items-center justify-between border-b border-slate-800 pb-4">
+                            <div>
+                                <span class="text-xs font-mono font-bold uppercase tracking-wider text-amber-400">Phase 2 &bull; Secondary Release</span>
+                                <h3 class="text-2xl font-bold text-white mt-0.5">December 2026</h3>
+                            </div>
+                            <span class="px-3 py-1 rounded-lg text-xs font-mono font-bold bg-amber-400 text-cosmos-950">
+                                3 Concepts
+                            </span>
+                        </div>
+
+                        <div class="space-y-3 text-xs sm:text-sm">
+                            <div class="p-4 rounded-xl bg-cosmos-950/70 border border-slate-800">
+                                <div class="flex items-center justify-between">
+                                    <span class="font-bold text-white font-mono text-xs">4. Balanced and Eccentric Integers</span>
+                                    <span class="text-[10px] font-mono text-amber-400">Dec 2026</span>
+                                </div>
+                            </div>
+
+                            <div class="p-4 rounded-xl bg-cosmos-950/70 border border-slate-800">
+                                <div class="flex items-center justify-between">
+                                    <span class="font-bold text-white font-mono text-xs">5. Microscopy Of Integers</span>
+                                    <span class="text-[10px] font-mono text-teal-400">Dec 2026</span>
+                                </div>
+                            </div>
+
+                            <div class="p-4 rounded-xl bg-cosmos-950/70 border border-slate-800">
+                                <div class="flex items-center justify-between">
+                                    <span class="font-bold text-white font-mono text-xs">6. The Last Resort Addition</span>
+                                    <span class="text-[10px] font-mono text-rose-400">Dec 2026</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="pt-2 text-slate-500 font-mono text-[11px] flex justify-between items-center">
+                            <span>Sequential Release Track</span>
+                            <span class="text-amber-400">December 2026</span>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Modal for Concept Note Ingestion -->
+        <div id="ingestionModal" class="fixed inset-0 z-50 hidden bg-cosmos-950/85 backdrop-blur-md overflow-y-auto flex items-center justify-center p-4">
+            <div class="math-glass w-full max-w-2xl rounded-2xl border border-slate-700 p-6 sm:p-8 space-y-6 shadow-2xl relative">
+                <button onclick="closeIngestionModal()" class="absolute top-5 right-5 text-slate-400 hover:text-white">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+
+                <div>
+                    <span class="text-xs font-mono font-bold text-brand-400 uppercase tracking-widest">Concept Ingestion Desk</span>
+                    <h3 class="text-2xl font-bold text-white mt-1">Ingest Mathematical Note</h3>
+                    <p class="text-slate-400 text-xs mt-1">Add your notes, definitions, or conjectural formulas under the active sequence.</p>
+                </div>
+
+                <form id="ingestionForm" onsubmit="handleIngestSubmit(event)" class="space-y-4">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-mono text-slate-300 mb-1" for="noteCategory">Parent Concept</label>
+                            <select id="noteCategory" class="w-full bg-cosmos-900 border border-slate-800 rounded-lg px-3 py-2 text-xs sm:text-sm text-white focus:outline-none focus:border-brand-500">
+                                <option value="1. Foliations of Integers">1. Foliations of Integers</option>
+                                <option value="2. The General Number Line">2. The General Number Line: Discrete Foliation</option>
+                                <option value="3. Arithmetic Holography">3. The Arithmetic Holographic Principle &amp; Conjecture</option>
+                                <option value="4. Balanced and Eccentric Integers">4. Balanced and Eccentric Integers</option>
+                                <option value="5. Microscopy Of Integers">5. Microscopy Of Integers</option>
+                                <option value="6. The Last Resort Addition">6. The Last Resort Addition</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-mono text-slate-300 mb-1" for="noteAuthor">Contributor / Ref</label>
+                            <input type="text" id="noteAuthor" required placeholder="e.g. Lead Author" class="w-full bg-cosmos-900 border border-slate-800 rounded-lg px-3 py-2 text-xs sm:text-sm text-white focus:outline-none focus:border-brand-500">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-mono text-slate-300 mb-1" for="noteTitle">Section / Note Designation</label>
+                        <input type="text" id="noteTitle" required placeholder="e.g., Modular Foliation Leaf Holonomy" class="w-full bg-cosmos-900 border border-slate-800 rounded-lg px-3 py-2 text-xs sm:text-sm text-white focus:outline-none focus:border-brand-500">
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-mono text-slate-300 mb-1" for="noteFormula">LaTeX Formula Representation</label>
+                        <input type="text" id="noteFormula" oninput="updateLiveModalMath(this.value)" placeholder="\mathcal{F}_p(\mathbb{Z}) = \{ k \in \mathbb{Z} : k \equiv a \pmod{p} \}" class="w-full bg-cosmos-900 border border-slate-800 rounded-lg px-3 py-2 text-xs sm:text-sm font-mono text-brand-300 focus:outline-none focus:border-brand-500">
+                    </div>
+
+                    <!-- Live Math Preview Box -->
+                    <div class="bg-cosmos-950 p-3 rounded-lg border border-slate-800">
+                        <span class="text-[10px] uppercase font-mono text-slate-500 block mb-1">Live Formula Preview:</span>
+                        <div id="modalMathLivePreview" class="text-xs sm:text-sm font-mono text-brand-400 py-1 overflow-x-auto min-h-[28px]">
+                            $$\mathcal{F}_p(\mathbb{Z}) = \{ k \in \mathbb{Z} : k \equiv a \pmod{p} \}$$
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-mono text-slate-300 mb-1" for="noteText">Axiomatic Definition or Exposition</label>
+                        <textarea id="noteText" rows="3" required placeholder="State definitions, leaf decompositions, or conjectural properties..." class="w-full bg-cosmos-900 border border-slate-800 rounded-lg px-3 py-2 text-xs sm:text-sm text-white focus:outline-none focus:border-brand-500"></textarea>
+                    </div>
+
+                    <div class="pt-2 flex justify-end gap-3">
+                        <button type="button" onclick="closeIngestionModal()" class="px-4 py-2 rounded-lg text-xs font-semibold text-slate-400 hover:text-white">Cancel</button>
+                        <button type="submit" class="px-5 py-2 rounded-lg text-xs font-bold uppercase tracking-wider bg-brand-500 hover:bg-brand-400 text-cosmos-950 transition">Append Note</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Toast Notification -->
+        <div id="toastNotification" class="fixed bottom-6 right-6 z-50 hidden bg-cosmos-900 border border-brand-500/50 text-white px-4 py-3 rounded-xl shadow-2xl flex items-center gap-3 transition-all transform translate-y-2">
+            <div class="w-2 h-2 rounded-full bg-brand-400 animate-ping"></div>
+            <span id="toastMessage" class="text-xs font-mono">Notification</span>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-cosmos-950 border-t border-slate-800/80 pt-16 pb-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-5 gap-8 mb-12">
+                
+                <!-- Brand & About -->
+                <div class="md:col-span-2 space-y-4">
+                    <div class="flex items-center space-x-2">
+                        <span class="text-brand-400 font-mono text-xl font-extrabold">&nabla;</span>
+                        <span class="font-bold font-mono text-white text-base tracking-wider">NEW-MATHEMATICAL-CONCEPTS.ORG</span>
+                    </div>
+                    <p class="text-slate-400 text-xs leading-relaxed max-w-md">
+                        The open digital archive dedicated to the sequential formulation and dissemination of the six core concepts bridging geometric frameworks and arithmetic topology.
+                    </p>
+                    <div class="text-[11px] font-mono text-slate-500">
+                        Permanent Digital DOI: <span class="text-slate-400">10.6092/nmc-foliations</span> &bull; Open Science CC BY 4.0
+                    </div>
+                </div>
+
+                <!-- The Six Pillars Navigation -->
+                <div>
+                    <h5 class="text-xs font-bold uppercase tracking-wider text-slate-300 font-mono mb-3">The Six Pillars</h5>
+                    <ul class="space-y-1.5 text-xs text-slate-400 font-mono">
+                        <li><a href="#roadmap" class="hover:text-brand-300 transition">1. Foliations of Integers (Oct 2026)</a></li>
+                        <li><a href="#roadmap" class="hover:text-brand-300 transition">2. General Number Line (Oct 2026)</a></li>
+                        <li><a href="#roadmap" class="hover:text-brand-300 transition">3. Arithmetic Holography (Oct 2026)</a></li>
+                        <li><a href="#roadmap" class="hover:text-brand-300 transition">4. Balanced / Eccentric (Dec 2026)</a></li>
+                        <li><a href="#roadmap" class="hover:text-brand-300 transition">5. Microscopy of Integers (Dec 2026)</a></li>
+                        <li><a href="#roadmap" class="hover:text-brand-300 transition">6. Last Resort Addition (Dec 2026)</a></li>
+                    </ul>
+                </div>
+
+                <!-- Principal Author Profile -->
+                <div class="md:col-span-2 flex flex-col md:items-end md:justify-start">
+                    <div class="w-full max-w-sm">
+                        <h5 class="text-xs font-bold uppercase tracking-wider text-slate-300 font-mono mb-3 text-left">Principal Investigator</h5>
+                        <div class="flex items-center gap-4 bg-cosmos-900/80 p-4 rounded-2xl border border-brand-500/20 shadow-xl relative overflow-hidden">
+                            <div class="absolute -right-4 -top-4 w-20 h-20 bg-brand-500/5 rounded-full blur-xl pointer-events-none"></div>
+                            
+                            <!-- Verbatim Image Call -->
+                            <img src="photo_HB.jpg" alt="Dr. Hassan BALOUI" class="w-16 h-16 rounded-full border-2 border-brand-500/40 object-cover shadow-[0_0_15px_rgba(45,212,191,0.15)] relative z-10">
+                            
+                            <div class="text-left relative z-10">
+                                <span class="text-sm font-bold text-white block font-mono">Dr. Hassan BALOUI</span>
+                                <span class="text-[11px] text-brand-400 font-mono block mb-1">Author &amp; Lead Researcher</span>
+                                <p class="text-[10px] text-slate-400 leading-snug">Architect of the Discrete Foliation framework and the sequential Six-Pillar mathematical program.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Copyright Line -->
+            <div class="pt-8 border-t border-slate-900 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 font-mono">
+                <div>&copy; 2026 www.new-mathematical-concepts.org &bull; Author: <span class="text-slate-300">Dr. Hassan BALOUI</span> &bull; Working Colloquium</div>
+                <div class="mt-4 sm:mt-0 flex gap-4">
+                    <span>Releases: [Oct 2026 &bull; Dec 2026]</span>
+                    <span>KaTeX Live</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Interactive Logic -->
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            initKaTeXRender();
+            runTransportCalc();
+        });
+
+        // Interactive Discrete Transport Operator Calculator Engine
+        function runTransportCalc() {
+            const nInput = document.getElementById('calcN');
+            const sInput = document.getElementById('calcS');
+            const gammaInput = document.getElementById('calcGamma');
+            const outputBox = document.getElementById('calcResultsBox');
+
+            if (!nInput || !sInput || !gammaInput || !outputBox) return;
+
+            const n = parseInt(nInput.value, 10) || 0;
+            const s = parseInt(sInput.value, 10) || 0;
+            const gamma = parseInt(gammaInput.value, 10) || 0;
+
+            const baseK = Math.floor(Math.sqrt(Math.max(0, n)));
+            const lowerSq = baseK * baseK;
+            const upperSq = (baseK + 1) * (baseK + 1);
+            const causalDepth = n - lowerSq;
+
+            // Discrete Transport Operator: n + 2*s*k + s^2 + gamma*s
+            const linearTerm = 2 * s * baseK;
+            const quadraticTerm = s * s;
+            const gaugeTerm = gamma * s;
+            const transportedResult = n + linearTerm + quadraticTerm + gaugeTerm;
+
+            const newK = transportedResult >= 0 ? Math.floor(Math.sqrt(transportedResult)) : 0;
+            const targetExpectedK = baseK + s;
+
+            outputBox.innerHTML = `
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pb-3 border-b border-slate-800">
+                    <div>
+                        <div class="text-slate-400">Source State Analysis:</div>
+                        <div class="text-white font-bold text-sm mt-0.5">$n = ${n}$</div>
+                        <div class="text-slate-400 mt-1">Causal Shell: $k = \\lfloor\\sqrt{n}\\rfloor = ${baseK}$</div>
+                        <div class="text-slate-400">Shell Range: $[${lowerSq}, ${upperSq - 1}]$ (Depth: $\\delta = ${causalDepth}$)</div>
+                    </div>
+                    <div>
+                        <div class="text-slate-400">Transport Operation:</div>
+                        <div class="text-brand-300 font-bold text-sm mt-0.5">$\\nabla_{${gamma}}(${n}, ${s}) = ${transportedResult}$</div>
+                        <div class="text-slate-400 mt-1">New Causal Shell: $k' = \\lfloor\\sqrt{${transportedResult}}\\rfloor = ${newK}$</div>
+                        <div class="text-slate-400">Target Expected Shell: $k + s = ${targetExpectedK}$ ${newK === targetExpectedK ? '<span class="text-emerald-400 font-bold">&check; Shell Aligned</span>' : '<span class="text-amber-400 font-bold">&bull; Boundary Transition</span>'}</div>
+                    </div>
+                </div>
+                <div class="text-[11px] text-slate-400 space-y-1 pt-1">
+                    <div><strong>Component Expansion:</strong> $\\nabla_{${gamma}}(${n}, ${s}) = ${n} + 2(${s})(${baseK}) + (${s})^2 + (${gamma})(${s}) = ${n} + ${linearTerm} + ${quadraticTerm} + ${gaugeTerm} = ${transportedResult}$</div>
+                    <div class="text-slate-500">At perfect square boundaries, classical scalar addition encounters topological rupture; the transport operator guarantees exact geometric geodesic transit across discrete shells.</div>
+                </div>
+            `;
+
+            if (window.renderMathInElement) {
+                renderMathInElement(outputBox, {
+                    delimiters: [
+                        {left: '$$', right: '$$', display: true},
+                        {left: '$', right: '$', display: false}
+                    ],
+                    throwOnError: false
+                });
+            }
+        }
+
+        function initKaTeXRender() {
+            if (window.renderMathInElement) {
+                renderMathInElement(document.body, {
+                    delimiters: [
+                        {left: '$$', right: '$$', display: true},
+                        {left: '$', right: '$', display: false}
+                    ],
+                    throwOnError: false
+                });
+            }
+        }
+
+        // Modal Handling
+        function openIngestionModal() {
+            document.getElementById('ingestionModal').classList.remove('hidden');
+        }
+
+        function closeIngestionModal() {
+            document.getElementById('ingestionModal').classList.add('hidden');
+        }
+
+        function updateLiveModalMath(val) {
+            const preview = document.getElementById('modalMathLivePreview');
+            if (!val.trim()) {
+                preview.innerHTML = "$$\\mathcal{F}_p(\\mathbb{Z}) = \\{ k \\in \\mathbb{Z} : k \\equiv a \\pmod{p} \\}$$";
+            } else {
+                preview.innerHTML = `$$${val}$$`;
+            }
+            if (window.renderMathInElement) {
+                renderMathInElement(preview, {
+                    delimiters: [{left: '$$', right: '$$', display: true}]
+                });
+            }
+        }
+
+        function handleIngestSubmit(e) {
+            e.preventDefault();
+            closeIngestionModal();
+            showToast(`Note successfully ingested.`);
+            e.target.reset();
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toastNotification');
+            const toastMsg = document.getElementById('toastMessage');
+            if (!toast || !toastMsg) return;
+
+            toastMsg.textContent = message;
+            toast.classList.remove('hidden');
+            toast.classList.remove('translate-y-2');
+
+            setTimeout(() => {
+                toast.classList.add('translate-y-2');
+                setTimeout(() => toast.classList.add('hidden'), 200);
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
