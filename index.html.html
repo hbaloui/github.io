@@ -1,0 +1,2053 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth overflow-x-hidden">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <title>The Geometry of Integers | New Mathematical Concepts</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- KaTeX for crisp mathematical typography -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f0fdfa',
+                            100: '#ccfbf1',
+                            300: '#5eead4',
+                            400: '#2dd4bf',
+                            500: '#14b8a6',
+                            600: '#0d9488',
+                            900: '#134e4a',
+                            950: '#042f2e'
+                        },
+                        cosmos: {
+                            800: '#0f172a',
+                            900: '#090d16',
+                            950: '#040711'
+                        }
+                    },
+                    fontFamily: {
+                        mono: ['JetBrains Mono', 'Fira Code', 'Menlo', 'monospace'],
+                        sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: #040711; }
+        ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #14b8a6; }
+
+        .math-glass {
+            background: rgba(15, 23, 42, 0.78);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .math-glass-emerald {
+            background: rgba(20, 184, 166, 0.07);
+            border: 1px solid rgba(45, 212, 191, 0.35);
+            box-shadow: 0 0 30px rgba(20, 184, 166, 0.12);
+        }
+
+        .grid-pattern {
+            background-size: 36px 36px;
+            background-image: 
+                linear-gradient(to right, rgba(255, 255, 255, 0.022) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.022) 1px, transparent 1px);
+        }
+
+        .glow-text {
+            text-shadow: 0 0 20px rgba(45, 212, 191, 0.4);
+        }
+
+        .katex-display {
+            overflow-x: auto;
+            overflow-y: hidden;
+            padding-bottom: 0.35rem;
+            margin: 0.4rem 0 !important;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .custom-scrollbar {
+            -webkit-overflow-scrolling: touch;
+        }
+        .custom-scrollbar::-webkit-scrollbar { height: 4px; width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+
+        /* Smooth responsive canvas scaling on smartphones & laptops */
+        .responsive-canvas {
+            width: 100%;
+            height: auto;
+            display: block;
+            touch-action: manipulation;
+        }
+    </style>
+</head>
+<body class="bg-cosmos-950 text-slate-200 font-sans min-h-screen selection:bg-brand-500 selection:text-black grid-pattern overflow-x-hidden flex flex-col">
+
+    <!-- Sticky Chapter Navigation Header -->
+    <header class="sticky top-0 z-50 math-glass border-b border-slate-800/80">
+        <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between gap-2 sm:gap-3">
+            <!-- Top Left: Website Logo (logo_nmc.png) & Brand Identity -->
+            <a href="#prologue" class="flex items-center space-x-2.5 sm:space-x-3 min-w-0 group">
+                <img src="logo_nmc.png" alt="New Mathematical Concepts Logo" class="w-9 h-9 sm:w-12 sm:h-12 rounded-xl object-contain bg-cosmos-950 border border-brand-500/40 p-1 shadow-lg shadow-brand-500/20 group-hover:scale-105 transition flex-shrink-0">
+                <div class="flex flex-col min-w-0">
+                    <span class="font-bold tracking-wider text-[11px] sm:text-sm text-white font-mono flex items-center gap-1 sm:gap-1.5 truncate">
+                        <span class="truncate">NEW-MATH-CONCEPTS</span>
+                        <span class="text-[8px] sm:text-[9px] uppercase px-1 sm:px-1.5 py-0.5 rounded bg-brand-900/70 text-brand-300 border border-brand-500/30 flex-shrink-0">ORG</span>
+                    </span>
+                    <span class="text-[10px] font-mono text-slate-400 hidden sm:inline truncate">Interactive Monograph &bull; Geometry of Integers</span>
+                </div>
+            </a>
+
+            <!-- Center: Quick Chapter Jumper (Desktop) -->
+            <nav class="hidden xl:flex items-center space-x-1 text-xs font-mono">
+                <a href="#prologue" class="px-2.5 py-1.5 rounded-lg text-slate-300 hover:text-brand-300 hover:bg-slate-800/60 transition">00. Prologue</a>
+                <a href="#chapter-1" class="px-2.5 py-1.5 rounded-lg text-slate-300 hover:text-brand-300 hover:bg-slate-800/60 transition">I. Shells &amp; Leaves</a>
+                <a href="#chapter-2" class="px-2.5 py-1.5 rounded-lg text-slate-300 hover:text-brand-300 hover:bg-slate-800/60 transition">II. Geodesics</a>
+                <a href="#chapter-3" class="px-2.5 py-1.5 rounded-lg text-slate-300 hover:text-brand-300 hover:bg-slate-800/60 transition">III. Arithmetic &amp; 31</a>
+                <a href="#chapter-4" class="px-2.5 py-1.5 rounded-lg text-slate-300 hover:text-brand-300 hover:bg-slate-800/60 transition">IV. Triadic Primes</a>
+                <a href="#chapter-5" class="px-2.5 py-1.5 rounded-lg text-slate-300 hover:text-brand-300 hover:bg-slate-800/60 transition">V. Holography</a>
+                <a href="#epilogue" class="px-2.5 py-1.5 rounded-lg text-slate-300 hover:text-brand-300 hover:bg-slate-800/60 transition">VI. m=1 &amp; Community</a>
+            </nav>
+
+            <!-- Top Right: DOI Badge & Author Image (photo_HB.jpg) -->
+            <div class="flex items-center gap-2 sm:gap-3.5 flex-shrink-0">
+                <a href="https://doi.org/10.5281/zenodo.23456718" target="_blank" rel="noopener noreferrer" class="px-2.5 sm:px-3 py-1.5 rounded-xl bg-brand-500/15 border border-brand-500/40 text-brand-300 hover:bg-brand-500/25 transition font-mono text-[10px] sm:text-xs flex items-center gap-1.5">
+                    <span class="w-1.5 h-1.5 rounded-full bg-brand-400 animate-pulse"></span>
+                    <span class="hidden sm:inline">Full Paper (DOI)</span>
+                    <span class="sm:hidden">Paper</span>
+                    <span>&nearr;</span>
+                </a>
+
+                <div class="flex items-center gap-2 sm:gap-2.5 pl-2 sm:pl-3 border-l border-slate-800">
+                    <div class="hidden md:flex flex-col text-right">
+                        <span class="text-xs font-bold text-white font-mono leading-tight">Dr. Hassan BALOUI</span>
+                        <span class="text-[10px] text-brand-400 font-mono">Author</span>
+                    </div>
+                    <img src="photo_HB.jpg" alt="Dr. Hassan BALOUI" title="Author: Dr. Hassan BALOUI" class="w-9 h-9 sm:w-12 sm:h-12 rounded-full border-2 border-brand-400/60 object-cover shadow-md flex-shrink-0">
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile & Tablet Touch-Friendly Horizontal Chapter Strip -->
+        <div class="xl:hidden border-t border-slate-800/80 px-3 py-2 overflow-x-auto custom-scrollbar flex items-center gap-2 text-[11px] font-mono whitespace-nowrap bg-cosmos-950/95">
+            <a href="#prologue" class="px-3 py-1 rounded-lg bg-slate-900 text-brand-300 border border-brand-500/30 active:scale-95 transition">00. Unfolder</a>
+            <a href="#chapter-1" class="px-3 py-1 rounded-lg bg-slate-900 text-slate-300 border border-slate-800 active:scale-95 transition">I. Shells &amp; Leaves</a>
+            <a href="#chapter-2" class="px-3 py-1 rounded-lg bg-slate-900 text-slate-300 border border-slate-800 active:scale-95 transition">II. Geodesics</a>
+            <a href="#chapter-3" class="px-3 py-1 rounded-lg bg-slate-900 text-slate-300 border border-slate-800 active:scale-95 transition">III. Arithmetic</a>
+            <a href="#chapter-4" class="px-3 py-1 rounded-lg bg-slate-900 text-slate-300 border border-slate-800 active:scale-95 transition">IV. 861 Prism</a>
+            <a href="#chapter-5" class="px-3 py-1 rounded-lg bg-slate-900 text-slate-300 border border-slate-800 active:scale-95 transition">V. Holography</a>
+            <a href="#epilogue" class="px-3 py-1 rounded-lg bg-slate-900 text-slate-300 border border-slate-800 active:scale-95 transition">VI. Community</a>
+        </div>
+    </header>
+
+    <main class="flex-grow w-full overflow-x-hidden flex flex-col space-y-14 sm:space-y-24 pb-16 sm:pb-20">
+
+        <!-- =====================================================================
+             EPIGRAPH & PROLOGUE: TWO DEGREES OF FREEDOM
+             ===================================================================== -->
+        <section id="prologue" class="scroll-mt-28 pt-5 sm:pt-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full space-y-6 sm:space-y-8">
+            
+            <!-- Alain Connes Epigraph -->
+            <div class="math-glass rounded-2xl p-4 sm:p-6 border border-brand-500/30 relative overflow-hidden shadow-xl bg-gradient-to-r from-cosmos-950 via-slate-900/90 to-cosmos-950">
+                <div class="flex items-start gap-2.5 sm:gap-4">
+                    <span class="text-2xl sm:text-4xl text-brand-400 font-serif leading-none select-none opacity-80 mt-0.5">&ldquo;</span>
+                    <div class="space-y-2 w-full">
+                        <blockquote class="text-xs sm:text-sm md:text-base text-slate-200 italic leading-relaxed">
+                            I believe that mathematics is one way the human mind can create concepts. In many ways mathematics plays a role that philosophy could have played in creating concepts that then can be used in the real world. It takes time for them to evolve and be used in the real world, but the real factory is mathematics.
+                        </blockquote>
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 sm:gap-2 pt-2 border-t border-slate-800/80 text-[10px] sm:text-xs font-mono">
+                            <span class="text-brand-300 font-medium flex items-center gap-2">
+                                <span class="w-1.5 h-1.5 rounded-full bg-brand-400 flex-shrink-0"></span>
+                                <span>Alain Connes <span class="text-slate-500 hidden sm:inline">&bull; Fields Medalist, Noncommutative Geometry</span></span>
+                            </span>
+                            <a href="https://doi.org/10.1515/9781400832880" target="_blank" rel="noopener noreferrer" class="text-brand-400 hover:text-brand-300 underline underline-offset-4 self-start sm:self-auto">
+                                Source: DOI 10.1515/9781400832880 &nearr;
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hero Narrative + Interactive Widget 0: Dimension Unfolder -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-center">
+                <!-- Left Column: Story -->
+                <div class="lg:col-span-5 space-y-4 sm:space-y-5">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-950 border border-brand-500/40 text-[11px] sm:text-xs text-brand-300 font-mono">
+                        <span class="w-2 h-2 rounded-full bg-brand-400 animate-ping"></span>
+                        <span>Visual Overview &bull; Minimal Equations</span>
+                    </div>
+
+                    <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-white leading-tight">
+                        The Geometry <br class="hidden sm:inline"/>
+                        <span class="bg-clip-text text-transparent bg-gradient-to-r from-brand-400 via-teal-200 to-indigo-400 glow-text">
+                            of Integers
+                        </span>
+                    </h1>
+
+                    <p class="text-sm sm:text-base text-slate-300 leading-relaxed">
+                        On the classical one-dimensional number line, the structural depth of an integer—its step distance from the origin—coincides identically with its scalar magnitude. Confined to a single degree of freedom, integers can translate only forward or backward along a single flat axis.
+                    </p>
+
+                    <div class="p-4 rounded-xl bg-slate-900/90 border border-slate-800 space-y-2.5 text-xs sm:text-sm text-slate-300">
+                        <div class="font-mono text-brand-400 font-bold uppercase tracking-wider text-xs">The Core Concept: Two Degrees of Freedom</div>
+                        <p class="leading-relaxed">
+                            By partitioning the integers into horizontal power shells aligned along a central median leaf, every integer acquires <strong>two degrees of freedom</strong> and generates its own intrinsic two-dimensional coordinates across three canonical directional leaves.
+                        </p>
+                        <p class="leading-relaxed text-slate-400 text-xs">
+                            Longitudinal depth along a structural leaf decouples from ambient scalar magnitude—endowing the integers natively with a geodesic metric, multi-valued arithmetic, three prime factorizations per integer, discrete curvature, and prime holography.
+                        </p>
+                    </div>
+
+                    <p class="text-xs text-slate-400 font-mono">
+                        This portal presents the visual intuition with minimal equations. We invite you to read the full monograph for complete equations, proofs, and analytical derivations.
+                    </p>
+
+                    <div class="flex flex-col sm:flex-row gap-3 pt-1">
+                        <a href="#chapter-1" class="w-full sm:w-auto text-center px-5 py-3 sm:py-2.5 rounded-xl font-mono text-xs sm:text-sm font-bold bg-brand-500 text-cosmos-950 hover:bg-brand-400 transition shadow-lg shadow-brand-500/20">
+                            Explore the Interactive Story &darr;
+                        </a>
+                        <a href="https://doi.org/10.5281/zenodo.23456718" target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto text-center px-4 py-3 sm:py-2.5 rounded-xl font-mono text-xs sm:text-sm bg-slate-900 hover:bg-slate-800 text-slate-200 border border-slate-700 transition">
+                            Read Full Paper (Zenodo) &nearr;
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Right Column: Widget 0 - Dimension Unfolder -->
+                <div class="lg:col-span-7 math-glass math-glass-emerald rounded-2xl sm:rounded-3xl p-4 sm:p-6 space-y-4">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-800 pb-3">
+                        <div>
+                            <span class="text-[10px] font-mono uppercase tracking-widest text-brand-400 font-bold">Interactive Widget 00</span>
+                            <h3 class="text-sm sm:text-lg font-bold text-white font-mono">The Dimension Unfolder ($\mathbb{N}_1 \to \mathbb{N}_2 \to \mathbb{N}_3$)</h3>
+                        </div>
+                        <div class="grid grid-cols-3 sm:flex gap-1.5 bg-cosmos-950 p-1 rounded-xl border border-slate-800 w-full sm:w-auto">
+                            <button onclick="setUnfolderMode(1)" id="btn-unfold-1" class="px-2 sm:px-3 py-2 sm:py-1.5 rounded-lg font-mono text-[11px] sm:text-xs font-bold transition bg-slate-800 text-slate-300 text-center">
+                                m = 1 (1D)
+                            </button>
+                            <button onclick="setUnfolderMode(2)" id="btn-unfold-2" class="px-2 sm:px-3 py-2 sm:py-1.5 rounded-lg font-mono text-[11px] sm:text-xs font-bold transition bg-brand-500 text-cosmos-950 text-center">
+                                m = 2 (n&le;35)
+                            </button>
+                            <button onclick="setUnfolderMode(3)" id="btn-unfold-3" class="px-2 sm:px-3 py-2 sm:py-1.5 rounded-lg font-mono text-[11px] sm:text-xs font-bold transition bg-slate-800 text-slate-300 text-center">
+                                m = 3 (Cubic)
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="w-full bg-cosmos-950 border border-slate-800/90 rounded-2xl overflow-hidden p-1 sm:p-2">
+                        <canvas id="unfolder-canvas" width="700" height="360" class="responsive-canvas"></canvas>
+                    </div>
+
+                    <div id="unfolder-caption" class="grid grid-cols-1 sm:grid-cols-3 gap-2 text-xs font-mono">
+                        <!-- Dynamically updated by JS -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- =====================================================================
+             CHAPTER I: SHELLS & THE 4-WAY LEAF INTERSECTION
+             ===================================================================== -->
+        <section id="chapter-1" class="scroll-mt-28 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full space-y-6">
+            <div class="flex flex-col md:flex-row md:items-end justify-between border-b border-slate-800 pb-4 gap-3">
+                <div>
+                    <span class="text-xs font-mono font-bold uppercase tracking-widest text-brand-400">Chapter I &bull; Intrinsic 2D Coordinates</span>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-white mt-1">Shells &amp; The Four-Way Leaf Intersection</h2>
+                </div>
+                <p class="text-xs sm:text-sm text-slate-400 max-w-xl">
+                    Every integer $n \in \mathbb{N}_m$ sits at the unique four-way intersection of one Horizontal Shell $S_{k,m}$ and three directional Leaves: Left ($\lambda=0$), Vertical ($\lambda=1/2$), and Right ($\lambda=1$).
+                </p>
+            </div>
+
+            <!-- Story Cards -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 text-xs sm:text-sm">
+                <div class="math-glass p-4 rounded-2xl border-l-4 border-l-rose-500 space-y-1">
+                    <div class="font-mono font-bold text-rose-400">1. Horizontal Shell ($S_{k,m}$)</div>
+                    <p class="text-slate-300 text-xs leading-relaxed">
+                        Bounded by consecutive $m$-th powers $[k^m, (k+1)^m-1]$, indexed by shell $k = \lfloor\sqrt[m]{n}\rfloor$ and intra-shell residue $r = n - k^m$.
+                    </p>
+                </div>
+                <div class="math-glass p-4 rounded-2xl border-l-4 border-l-emerald-500 space-y-1">
+                    <div class="font-mono font-bold text-emerald-400">2. Left Leaf ($L_{g_l}, \lambda = 0$)</div>
+                    <p class="text-slate-300 text-xs leading-relaxed">
+                        Tracks constant distance $g_l$ from the left boundary $k^m$, descending from birth shell $k_0(g_l)$ with local depth $d_l = k - k_0(g_l)$.
+                    </p>
+                </div>
+                <div class="math-glass p-4 rounded-2xl border-l-4 border-l-cyan-400 space-y-1">
+                    <div class="font-mono font-bold text-cyan-300">3. Vertical Leaf ($V_{g_v}, \lambda = 1/2$)</div>
+                    <p class="text-slate-300 text-xs leading-relaxed">
+                        Parallel to the principal vertical leaf $V_{0,m}$: signed offset $g_v$ from the shell median and local depth $d_v = k - k_0(g_v)$.
+                    </p>
+                </div>
+                <div class="math-glass p-4 rounded-2xl border-l-4 border-l-violet-500 space-y-1">
+                    <div class="font-mono font-bold text-violet-400">4. Right Leaf ($R_{g_r}, \lambda = 1$)</div>
+                    <p class="text-slate-300 text-xs leading-relaxed">
+                        Mirror image $\sigma_m(L_g) = R_g$ preserving distance $g_r$ from the right boundary $(k+1)^m-1$, with depth $d_r = k - k_0(g_r)$.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Interactive Widget 1: 4-Way Coordinate Inspector -->
+            <div class="math-glass rounded-2xl sm:rounded-3xl p-4 sm:p-6 lg:p-8 border border-slate-800 grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+                <!-- Left: Interactive N_2 Lattice Canvas -->
+                <div class="lg:col-span-7 space-y-3">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                        <span class="text-xs font-mono font-bold text-white flex items-center gap-2">
+                            <span class="w-2 h-2 rounded-full bg-brand-400 flex-shrink-0"></span>
+                            <span>Tap or click any integer in $\mathbb{N}_2$ ($0 \le n \le 35$):</span>
+                        </span>
+                        <div class="flex items-center gap-3 text-[11px] font-mono">
+                            <span class="text-rose-400">&mdash; $S_k$</span>
+                            <span class="text-emerald-400">&mdash; $L_{g_l}$</span>
+                            <span class="text-cyan-400">&mdash; $V_{g_v}$</span>
+                            <span class="text-violet-400">&mdash; $R_{g_r}$</span>
+                        </div>
+                    </div>
+
+                    <div class="w-full bg-cosmos-950 border border-slate-800 rounded-2xl overflow-hidden p-1 sm:p-2">
+                        <canvas id="inspector-canvas" width="620" height="350" class="responsive-canvas cursor-pointer"></canvas>
+                    </div>
+
+                    <p class="text-[11px] text-slate-400 font-mono leading-relaxed">
+                        Just as Cartesian projection reads off abscissa and ordinate, tracing $n$ backward along its three leaves to their boundary roots extracts $(g_\lambda, d_\lambda)$. See Section 2 of the <a href="https://doi.org/10.5281/zenodo.23456718" target="_blank" class="text-brand-400 underline">full paper</a> for closed-form parameterizations.
+                    </p>
+                </div>
+
+                <!-- Right: Coordinate Explanation + Matrix + 4-Line Algebraic Verification -->
+                <div class="lg:col-span-5 space-y-3.5 bg-cosmos-950/90 p-4 sm:p-5 rounded-2xl border border-slate-800">
+                    <div class="flex flex-wrap items-center justify-between border-b border-slate-800 pb-2.5 gap-2">
+                        <span class="text-xs font-mono font-bold text-brand-300 uppercase">Coordinate Extraction &amp; Verification</span>
+                        <span class="text-[11px] font-mono text-slate-400">$\{n\} = S_k \cap L_{g_l} \cap V_{g_v} \cap R_{g_r}$</span>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-3">
+                        <div>
+                            <label class="block text-[11px] font-mono text-slate-400 mb-1" for="insp-n">Integer $n$</label>
+                            <input id="insp-n" type="number" min="0" max="100000" value="10" oninput="updateCoordinateInspector()" class="w-full bg-cosmos-900 border border-slate-700 rounded-xl px-3 py-2 text-[16px] sm:text-sm font-mono font-bold text-white focus:outline-none focus:border-brand-400">
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-mono text-slate-400 mb-1" for="insp-m">Foliation Degree $m$</label>
+                            <select id="insp-m" onchange="updateCoordinateInspector()" class="w-full bg-cosmos-900 border border-slate-700 rounded-xl px-3 py-2 text-[16px] sm:text-sm font-mono font-bold text-brand-300 focus:outline-none focus:border-brand-400">
+                                <option value="2" selected>m = 2 (Quadratic)</option>
+                                <option value="3">m = 3 (Cubic)</option>
+                                <option value="4">m = 4 (Quartic)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-wrap gap-1.5 text-[11px] font-mono">
+                        <span class="text-slate-500 py-1">Paper Examples:</span>
+                        <button onclick="setInspectorPreset(9, 2)" class="px-2.5 py-1 rounded-lg bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-800">n=9, m=2</button>
+                        <button onclick="setInspectorPreset(10, 2)" class="px-2.5 py-1 rounded-lg bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-800">n=10, m=2</button>
+                        <button onclick="setInspectorPreset(100, 3)" class="px-2.5 py-1 rounded-lg bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-800">n=100, m=3</button>
+                        <button onclick="setInspectorPreset(100, 4)" class="px-2.5 py-1 rounded-lg bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-800">n=100, m=4</button>
+                    </div>
+
+                    <!-- Explanation before the Matrix (as per paper) -->
+                    <div class="p-3 rounded-xl bg-slate-900/90 border border-slate-800 text-[11px] text-slate-300 leading-relaxed space-y-1">
+                        <div class="font-mono font-bold text-brand-300">How to Read the Coordinate Matrix $M_{n,m}$:</div>
+                        <p>
+                            Column 1 records the <strong>Shell coordinates</strong> $[k, r]^\top$ ($n = k^m + r$). Columns 2&ndash;4 record the <strong>Leaf coordinates</strong> $[g_\lambda, d_\lambda]^\top$ along Left ($\lambda=0$), Vertical ($\lambda=1/2$), and Right ($\lambda=1$), where $g_\lambda$ is the leaf generator at birth shell $k_0$ and $d_\lambda = k - k_0$ is the local leaf depth.
+                        </p>
+                    </div>
+
+                    <!-- Matrix and 4-Line Algebraic Verification -->
+                    <div id="inspector-output" class="space-y-2.5 text-xs font-mono">
+                        <!-- Populated dynamically -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- =====================================================================
+             CHAPTER II: THE ENGINE OF MOTION & 1-ZIGZAG GEODESICS
+             ===================================================================== -->
+        <section id="chapter-2" class="scroll-mt-28 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full space-y-6">
+            <div class="flex flex-col md:flex-row md:items-end justify-between border-b border-slate-800 pb-4 gap-3">
+                <div>
+                    <span class="text-xs font-mono font-bold uppercase tracking-widest text-brand-400">Chapter II &bull; Transport &amp; Geodesic Distance</span>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-white mt-1">Discrete Transport &amp; 1-Zigzag Chebyshev Geodesics</h2>
+                </div>
+                <p class="text-xs sm:text-sm text-slate-400 max-w-xl">
+                    Moving an integer $n$ by $s$ shells along its resident $\lambda$-leaf via $\nabla_{\lambda,m}(n, s)$ preserves its leaf generator $g_\lambda$ and turns the lattice into a Chebyshev metric space $\delta_m(x,y) = \max(\Delta k, |\Delta g_v|)$.
+                </p>
+            </div>
+
+            <!-- Interactive Widget 2: 1-Zigzag Geodesic Router -->
+            <div class="math-glass rounded-2xl sm:rounded-3xl p-4 sm:p-6 lg:p-8 border border-slate-800 space-y-6">
+                <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-slate-800 pb-4">
+                    <div>
+                        <span class="text-[10px] font-mono uppercase tracking-widest text-brand-400 font-bold">Interactive Widget 02</span>
+                        <h3 class="text-sm sm:text-lg font-bold text-white font-mono">Non-Overshooting 1-Zigzag Geodesic Router in $\mathbb{N}_2$</h3>
+                        <div class="flex flex-wrap gap-1.5 mt-2 text-[11px] font-mono">
+                            <span class="text-slate-500 py-1">Regime Presets:</span>
+                            <button onclick="setGeodesicPreset(60, 746)" class="px-2.5 py-1 rounded-lg bg-brand-950/80 hover:bg-brand-900 text-brand-300 border border-brand-500/30">
+                                Longitudinal: 60 &rarr; 746
+                            </button>
+                            <button onclick="setGeodesicPreset(16, 24)" class="px-2.5 py-1 rounded-lg bg-amber-950/80 hover:bg-amber-900 text-amber-300 border border-amber-500/30">
+                                Transverse: 16 &rarr; 24
+                            </button>
+                            <button onclick="setGeodesicPreset(10, 35)" class="px-2.5 py-1 rounded-lg bg-indigo-950/80 hover:bg-indigo-900 text-indigo-300 border border-indigo-500/30">
+                                Transverse: 10 &rarr; 35
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 sm:flex items-end gap-3 w-full lg:w-auto">
+                        <div>
+                            <label class="block text-[10px] font-mono text-slate-400 uppercase mb-1" for="geo-x">Node $x$</label>
+                            <input id="geo-x" type="number" min="0" max="2000" value="60" class="w-full sm:w-24 bg-cosmos-950 border border-slate-700 rounded-xl px-3 py-2 text-[16px] sm:text-sm font-mono font-bold text-emerald-400 text-center">
+                        </div>
+                        <div>
+                            <label class="block text-[10px] font-mono text-slate-400 uppercase mb-1" for="geo-y">Node $y$</label>
+                            <input id="geo-y" type="number" min="0" max="2000" value="746" class="w-full sm:w-24 bg-cosmos-950 border border-slate-700 rounded-xl px-3 py-2 text-[16px] sm:text-sm font-mono font-bold text-rose-400 text-center">
+                        </div>
+                        <button onclick="computeGeodesicRoute()" class="col-span-2 sm:col-span-1 px-4 py-2.5 rounded-xl bg-brand-500 hover:bg-brand-400 text-cosmos-950 font-mono text-xs font-bold transition shadow-lg shadow-brand-500/20">
+                            Animate 1-Zigzag Geodesic
+                        </button>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+                    <div class="lg:col-span-7 w-full bg-cosmos-950 border border-slate-800 rounded-2xl overflow-hidden p-1 sm:p-2">
+                        <canvas id="geodesic-canvas" width="640" height="340" class="responsive-canvas"></canvas>
+                    </div>
+                    <div id="geodesic-telemetry" class="lg:col-span-5 bg-cosmos-950/90 p-4 sm:p-5 rounded-2xl border border-slate-800 font-mono text-xs space-y-3">
+                        <!-- Populated dynamically -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- =====================================================================
+             CHAPTER III: FOLIATED ARITHMETIC (ADDITION, SUBTRACTION, MULTIPLICATION)
+             ===================================================================== -->
+        <section id="chapter-3" class="scroll-mt-28 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full space-y-6">
+            <div class="flex flex-col md:flex-row md:items-end justify-between border-b border-slate-800 pb-4 gap-3">
+                <div>
+                    <span class="text-xs font-mono font-bold uppercase tracking-widest text-amber-400">Chapter III &bull; Non-Commutative Triads</span>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-white mt-1">Foliated Addition, Subtraction &amp; Multiplication</h2>
+                </div>
+                <p class="text-xs sm:text-sm text-slate-400 max-w-xl">
+                    In $\mathbb{Z}_m$ ($m \ge 2$), addition ($\oplus_m$), subtraction ($\ominus_m$), and multiplication ($\otimes_m$) unfold into directional triads $\lambda \in \{0, 1/2, 1\}$ where $a$ is the geometric leaf-anchor and $b$ is the kinematic driver.
+                </p>
+            </div>
+
+            <!-- Highlight Cards: Non-Commutativity, The 31 Anomaly, Cross-Origin Bounce -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-5">
+                <div class="math-glass p-4 sm:p-5 rounded-2xl border border-slate-800 space-y-2">
+                    <span class="text-[11px] font-mono text-brand-400 font-bold uppercase">1. Non-Commutative Triads</span>
+                    <p class="text-xs text-slate-300 leading-relaxed">
+                        Advancing along $a$'s leaves by $b$ steps differs from advancing along $b$'s leaves by $a$ steps: $2 \oplus_2 3 = \{17,20,23\} \neq 3 \oplus_2 2 = \{11,13,15\}$, and commutative products $(a \otimes_m b) \cap (b \otimes_m a) = \emptyset$ are always disjoint.
+                    </p>
+                </div>
+
+                <div class="math-glass p-4 sm:p-5 rounded-2xl border border-amber-500/40 bg-amber-950/10 space-y-2">
+                    <span class="text-[11px] font-mono text-amber-300 font-bold uppercase">2. The Uniqueness of Prime 31</span>
+                    <p class="text-xs text-slate-300 leading-relaxed">
+                        Across the entire infinite hierarchy $m \ge 2$ and all $2 \le a < b$, the prime <strong>$31 \in S_{5,2}$</strong> is the <em>unique</em> cross-direction commutative additive intersection: $(3 \oplus_2 4) \cap (4 \oplus_2 3) = \{\mathbf{31}\}$.
+                    </p>
+                </div>
+
+                <div class="math-glass p-4 sm:p-5 rounded-2xl border border-rose-500/30 space-y-2">
+                    <span class="text-[11px] font-mono text-rose-400 font-bold uppercase">3. Subtraction &amp; Origin Bounce</span>
+                    <p class="text-xs text-slate-300 leading-relaxed">
+                        On the reflected double-lattice $\mathbb{Z}_m$, whenever an inward subtraction step exceeds a leaf's local depth $d_{\lambda,m}(|a|)$, the trajectory bounces across the origin $0$ into the opposite half-lattice $\mathbb{Z}_m^{-\varepsilon_a}$.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Interactive Widget 3: Foliated Triad Calculator (+, -, *) -->
+            <div class="math-glass rounded-2xl sm:rounded-3xl p-4 sm:p-8 border border-slate-800 space-y-6">
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-800 pb-4">
+                    <div>
+                        <span class="text-[10px] font-mono uppercase tracking-widest text-amber-400 font-bold">Interactive Widget 03</span>
+                        <h3 class="text-sm sm:text-lg font-bold text-white font-mono">Foliated Triad Calculator ($\oplus_m, \ominus_m, \otimes_m$)</h3>
+                    </div>
+                    <div class="flex flex-wrap gap-2 text-xs font-mono">
+                        <button onclick="setArithPreset(3, 4, '+', 2)" class="px-3 py-2 sm:py-1.5 rounded-xl bg-amber-500/20 text-amber-300 border border-amber-500/40 hover:bg-amber-500/30 transition font-bold">
+                            &starf; The 31 Intersection (3 &oplus;₂ 4)
+                        </button>
+                        <button onclick="setArithPreset(13, 2, '-', 2)" class="px-3 py-2 sm:py-1.5 rounded-xl bg-rose-500/20 text-rose-300 border border-rose-500/40 hover:bg-rose-500/30 transition">
+                            Origin Bounce (13 &ominus;₂ 2)
+                        </button>
+                        <button onclick="setArithPreset(3, 4, '*', 2)" class="px-3 py-2 sm:py-1.5 rounded-xl bg-brand-500/20 text-brand-300 border border-brand-500/40 hover:bg-brand-500/30 transition">
+                            Disjoint Products (3 &otimes;₂ 4)
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Controls -->
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
+                    <div>
+                        <label class="block text-[11px] font-mono text-slate-400 mb-1" for="arith-a">Anchor $a \in \mathbb{Z}_m$</label>
+                        <input id="arith-a" type="number" value="3" oninput="runFoliatedCalculator()" class="w-full bg-cosmos-950 border border-slate-700 rounded-xl px-3 py-2 text-[16px] sm:text-sm font-mono font-bold text-white">
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-mono text-slate-400 mb-1" for="arith-op">Operation</label>
+                        <select id="arith-op" onchange="runFoliatedCalculator()" class="w-full bg-cosmos-950 border border-slate-700 rounded-xl px-3 py-2 text-[16px] sm:text-sm font-mono font-bold text-amber-300">
+                            <option value="+" selected>&oplus;_m (Addition)</option>
+                            <option value="-">&ominus;_m (Subtraction)</option>
+                            <option value="*">&otimes;_m (Multiplication)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-mono text-slate-400 mb-1" for="arith-b">Driver $b \in \mathbb{Z}_m$</label>
+                        <input id="arith-b" type="number" value="4" oninput="runFoliatedCalculator()" class="w-full bg-cosmos-950 border border-slate-700 rounded-xl px-3 py-2 text-[16px] sm:text-sm font-mono font-bold text-white">
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-mono text-slate-400 mb-1" for="arith-m">Degree $m$</label>
+                        <select id="arith-m" onchange="runFoliatedCalculator()" class="w-full bg-cosmos-950 border border-slate-700 rounded-xl px-3 py-2 text-[16px] sm:text-sm font-mono font-bold text-brand-300">
+                            <option value="1">m = 1 (Peano)</option>
+                            <option value="2" selected>m = 2 (Quadratic Z₂)</option>
+                            <option value="3">m = 3 (Cubic Z₃)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Output Comparison Cards -->
+                <div id="arith-output" class="grid grid-cols-1 lg:grid-cols-2 gap-4 font-mono text-xs">
+                    <!-- Populated dynamically -->
+                </div>
+
+                <p class="text-[11px] text-slate-400 font-mono leading-relaxed">
+                    For foliated exponentiation, Euclidean division, modular congruence, and the proofs of Theorems 3.1&ndash;3.7, see Section 3 of the <a href="https://doi.org/10.5281/zenodo.23456718" target="_blank" class="text-brand-400 underline">full paper</a>.
+                </p>
+            </div>
+        </section>
+
+        <!-- =====================================================================
+             CHAPTER IV: THE TRIADIC PRIME (THREE FACTORIZATIONS PER INTEGER)
+             ===================================================================== -->
+        <section id="chapter-4" class="scroll-mt-28 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full space-y-6">
+            <div class="flex flex-col md:flex-row md:items-end justify-between border-b border-slate-800 pb-4 gap-3">
+                <div>
+                    <span class="text-xs font-mono font-bold uppercase tracking-widest text-emerald-400">Chapter IV &bull; Leaf-Local Arithmetic</span>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-white mt-1">Three Prime Factorizations per Integer &amp; Goldbach Coupling</h2>
+                </div>
+                <p class="text-xs sm:text-sm text-slate-400 max-w-xl">
+                    Measuring divisibility by intrinsic leaf depth $d_{\lambda,m}(n)$ endows every individual leaf with an autonomous copy of the Fundamental Theorem of Arithmetic.
+                </p>
+            </div>
+
+            <!-- Narrative Insights (Minimal Equations) -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-5">
+                <div class="math-glass p-4 sm:p-5 rounded-2xl border border-emerald-500/30 space-y-2">
+                    <span class="text-[11px] font-mono text-emerald-400 font-bold uppercase">1. Leaf-Local Unique Factorization</span>
+                    <p class="text-xs text-slate-300 leading-relaxed">
+                        Along any fixed leaf, the local depth map is isomorphic to $(\mathbb{N}^*, \cdot)$. An integer $q$ is a <strong>Local Leaf-Depth Prime ($q \in \mathcal{D}_{\lambda,m}$)</strong> whenever its intrinsic leaf depth $d_{\lambda,m}(q)$ is prime, giving each integer 3 distinct canonical factorizations across $\lambda \in \{0, 1/2, 1\}$.
+                    </p>
+                </div>
+
+                <div class="math-glass p-4 sm:p-5 rounded-2xl border border-cyan-500/30 space-y-2">
+                    <span class="text-[11px] font-mono text-cyan-300 font-bold uppercase">2. Goldbach Depth Coupling in $\mathbb{N}_2$</span>
+                    <p class="text-xs text-slate-300 leading-relaxed">
+                        In $\mathbb{N}_2$, the Left and Right local depths sum to $k$ (for $r$ even) or $k-1$ (for $r$ odd). An integer $x \in S_{k,2}$ is simultaneously a Left and Right leaf-depth prime iff $(d_{0,2}(x), d_{1,2}(x))$ forms a <strong>Goldbach two-prime partition</strong> of $k$ or $k-1$.
+                    </p>
+                </div>
+
+                <div class="math-glass p-4 sm:p-5 rounded-2xl border border-violet-500/30 space-y-2">
+                    <span class="text-[11px] font-mono text-violet-300 font-bold uppercase">3. Minimal Triple Prime $x = 30$</span>
+                    <p class="text-xs text-slate-300 leading-relaxed">
+                        Because $\min(d_{0,2}, d_{1,2}) = \lfloor d_{1/2,2} / 2 \rfloor$, a prime minimum $\ge 2$ forces $d_{1/2,2} \ge 5$, ruling out $(2,2,2)$. The minimal Triple Leaf-Depth Prime in $\mathbb{N}_2$ is the central vertical leaf integer <strong>$x = 30 \in S_{5,2}$</strong> with depths $(2, 5, 2)$.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Interactive Widget 4: The x = 861 Multi-Foliation Factorization Prism -->
+            <div class="math-glass rounded-2xl sm:rounded-3xl p-4 sm:p-8 border border-emerald-500/30 space-y-6">
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-800 pb-4">
+                    <div>
+                        <span class="text-[10px] font-mono uppercase tracking-widest text-emerald-400 font-bold">Interactive Widget 04</span>
+                        <h3 class="text-sm sm:text-lg font-bold text-white font-mono">The Multi-Foliation Factorization Prism ($\mathbb{N}_1, \mathbb{N}_2, \mathbb{N}_3$)</h3>
+                    </div>
+
+                    <div class="flex flex-wrap items-center gap-2">
+                        <label class="text-xs font-mono text-slate-400" for="prism-x">Inspect Scalar $x$:</label>
+                        <input id="prism-x" type="number" min="2" max="100000" value="861" oninput="runFactorizationPrism()" class="w-28 bg-cosmos-950 border border-emerald-500/50 rounded-xl px-3 py-1.5 text-[16px] sm:text-sm font-mono font-bold text-emerald-300 text-center">
+                        <button onclick="setPrismPreset(861)" class="px-2.5 py-1.5 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 font-mono text-xs font-bold">x = 861 (Table 5)</button>
+                        <button onclick="setPrismPreset(30)" class="px-2.5 py-1.5 rounded-lg bg-violet-500/20 text-violet-300 border border-violet-500/40 font-mono text-xs font-bold">x = 30 (Triple Prime)</button>
+                        <button onclick="setPrismPreset(29)" class="px-2.5 py-1.5 rounded-lg bg-slate-800 text-slate-300 font-mono text-xs">x = 29</button>
+                    </div>
+                </div>
+
+                <div id="prism-output" class="space-y-4 font-mono text-xs">
+                    <!-- Populated dynamically -->
+                </div>
+            </div>
+        </section>
+
+        <!-- =====================================================================
+             CHAPTER V: CONICAL EMBEDDING, CURVATURE & PRIME HOLOGRAPHY (FIG. 6)
+             ===================================================================== -->
+        <section id="chapter-5" class="scroll-mt-28 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full space-y-6">
+            <div class="flex flex-col md:flex-row md:items-end justify-between border-b border-slate-800 pb-4 gap-3">
+                <div>
+                    <span class="text-xs font-mono font-bold uppercase tracking-widest text-indigo-400">Chapter V &bull; Holonomy &amp; Arithmetic Holography</span>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-white mt-1">Conical Prime Holography &amp; Discrete Curvature</h2>
+                </div>
+                <p class="text-xs sm:text-sm text-slate-400 max-w-xl">
+                    Wrapping $\mathbb{N}_2$ onto a cone closes each shell $S_n$ into a circular ring whose prime packet $\mathcal{P}(S_n)$ is sieved exclusively by the $\pi(n)$ primes in the interior interval $[1, n]$.
+                </p>
+            </div>
+
+            <!-- Interactive Widget 05: Interactive Figure 6 (Conical Prime Holography Diagram) -->
+            <div class="math-glass rounded-2xl sm:rounded-3xl p-4 sm:p-8 border border-indigo-500/30 space-y-6">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-800 pb-4">
+                    <div>
+                        <span class="text-[10px] font-mono uppercase tracking-widest text-indigo-400 font-bold">Interactive Widget 05 &bull; Paper Figure 6</span>
+                        <h3 class="text-sm sm:text-lg font-bold text-white font-mono">The Arithmetic Holographic Conjecture on the Conical Embedding of $\mathbb{N}_2$</h3>
+                    </div>
+                    <div class="px-3 py-1.5 rounded-xl bg-indigo-950/90 border border-indigo-500/40 text-indigo-200 font-mono text-xs self-start sm:self-auto">
+                        $\pi\big((n+1)^2\big) - \pi(n^2) \sim \pi(n)$
+                    </div>
+                </div>
+
+                <!-- Slider Control -->
+                <div class="bg-cosmos-950 p-4 rounded-2xl border border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div class="space-y-1">
+                        <div class="text-xs font-mono text-slate-300">
+                            Slide Shell Index $k = n$ to inspect the <strong>Interior Sieve Interval $[1, n]$</strong> (blue) vs. <strong>Shell Ring $S_n = [n^2, (n+1)^2-1]$</strong> (red):
+                        </div>
+                        <div id="holo-n-label" class="text-brand-300 font-mono font-bold text-xs sm:text-sm">
+                            n = 11 &bull; Interior [1, 11] (k &le; 3) sieves Shell Ring S₁₁ = [121, 143]
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-3 w-full sm:w-64 flex-shrink-0">
+                        <input id="holo-n-slider" type="range" min="3" max="45" value="11" oninput="updateHolographyExplorer()" class="w-full h-2 accent-brand-400 cursor-pointer">
+                    </div>
+                </div>
+
+                <!-- Canvas reproducing Figure 6 from the paper interactively (scales smoothly on smartphones & laptops) -->
+                <div class="w-full bg-cosmos-950 border border-slate-800 rounded-2xl overflow-hidden p-1 sm:p-2">
+                    <canvas id="holography-cone-canvas" width="820" height="330" class="responsive-canvas"></canvas>
+                </div>
+
+                <!-- Summary Stats + Prime Lists -->
+                <div id="holography-stats" class="grid grid-cols-1 md:grid-cols-3 gap-4 font-mono text-xs">
+                    <!-- Populated dynamically -->
+                </div>
+
+                <!-- Brief Note on Discrete Holonomy & Double-Cone -->
+                <div class="p-4 rounded-2xl bg-slate-900/80 border border-slate-800 flex flex-col md:flex-row md:items-center justify-between gap-4 text-xs">
+                    <div class="space-y-1 text-slate-300">
+                        <span class="font-mono font-bold text-brand-300 uppercase">Discrete Holonomy &amp; Asymptotic Curvature (Section 4.2):</span>
+                        <p class="leading-relaxed">
+                            Multiplying an integer $n$ by its leaf successor shifts it by $n$ shells ($\widehat{T}_\lambda(n) = \nabla_\lambda(n,n)$). Sequential self-shifts along distinct directions $\lambda_1 \neq \lambda_2$ fail to commute ($[\widehat{T}_{\lambda_1}, \widehat{T}_{\lambda_2}] \neq 0$), generating positive discrete curvature whose quadratically normalized value converges to $2|\lambda_1 - \lambda_2|$ at infinity.
+                        </p>
+                    </div>
+                    <a href="https://doi.org/10.5281/zenodo.23456718" target="_blank" rel="noopener noreferrer" class="px-4 py-2.5 rounded-xl bg-brand-500/15 border border-brand-500/40 text-brand-300 hover:bg-brand-500/25 font-mono text-xs text-center whitespace-nowrap flex-shrink-0">
+                        See Proofs in Section 4 &nearr;
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- =====================================================================
+             EPILOGUE: THE m=1 CORRESPONDENCE PRINCIPLE, OPEN HORIZONS & COMMUNITY
+             ===================================================================== -->
+        <section id="epilogue" class="scroll-mt-28 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full space-y-12">
+            
+            <!-- Part A: The m=1 Correspondence Principle -->
+            <div class="math-glass rounded-2xl sm:rounded-3xl p-4 sm:p-8 border border-brand-500/30 space-y-6">
+                <div class="flex flex-col md:flex-row md:items-end justify-between border-b border-slate-800 pb-4 gap-3">
+                    <div>
+                        <span class="text-xs font-mono font-bold uppercase tracking-widest text-brand-400">Epilogue &bull; Section 5 of the Paper</span>
+                        <h2 class="text-2xl sm:text-3xl font-extrabold text-white mt-1">The $m = 1$ Peano Correspondence Principle</h2>
+                    </div>
+                    <p class="text-xs sm:text-sm text-slate-400 max-w-xl">
+                        At the degenerate boundary $m=1$, lateral generators, discrete holonomy, and curvature vanish identically; the integers lose their second degree of freedom and classical Peano arithmetic is restored.
+                    </p>
+                </div>
+
+                <div class="overflow-x-auto custom-scrollbar">
+                    <table class="w-full text-left border-collapse font-mono text-xs min-w-[540px]">
+                        <thead>
+                            <tr class="border-b border-slate-800 text-slate-400 uppercase text-[11px]">
+                                <th class="py-3 px-3 sm:px-4">Mathematical Structure</th>
+                                <th class="py-3 px-3 sm:px-4 text-brand-300">Curved Foliation Regime ($m \ge 2$)</th>
+                                <th class="py-3 px-3 sm:px-4 text-amber-300">Flat Peano Limit ($m = 1$)</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-800/70 text-slate-200">
+                            <tr>
+                                <td class="py-3 px-3 sm:px-4 font-bold">Degrees of Freedom</td>
+                                <td class="py-3 px-3 sm:px-4">2D Lattice: Shell width $(k+1)^m - k^m$</td>
+                                <td class="py-3 px-3 sm:px-4">1D Line: $|S_{k,1}| = 1$, $g(a,\lambda) = 0$, $d_{\lambda,1}(a) = a$</td>
+                            </tr>
+                            <tr>
+                                <td class="py-3 px-3 sm:px-4 font-bold">Transport $\nabla_{\lambda,m}(a, s)$</td>
+                                <td class="py-3 px-3 sm:px-4">Direction-dependent leaf shift</td>
+                                <td class="py-3 px-3 sm:px-4">$\nabla_{\lambda,1}(a, s) = a + s$ (Single-valued shift)</td>
+                            </tr>
+                            <tr>
+                                <td class="py-3 px-3 sm:px-4 font-bold">Arithmetic Operations</td>
+                                <td class="py-3 px-3 sm:px-4">Non-commutative triads ($a \oplus_m b, a \ominus_m b, a \otimes_m b$)</td>
+                                <td class="py-3 px-3 sm:px-4">Classical $a + b$, $a - b$, $ab$</td>
+                            </tr>
+                            <tr>
+                                <td class="py-3 px-3 sm:px-4 font-bold">Prime Factorization</td>
+                                <td class="py-3 px-3 sm:px-4">3 Leaf-Local factorizations per integer ($\mathcal{D}_{\lambda,m}$)</td>
+                                <td class="py-3 px-3 sm:px-4">Classical Fundamental Theorem of Arithmetic ($\mathbb{P}$)</td>
+                            </tr>
+                            <tr>
+                                <td class="py-3 px-3 sm:px-4 font-bold">Holonomy &amp; Geodesic Metric</td>
+                                <td class="py-3 px-3 sm:px-4">Curved ($[\widehat{T}_{\lambda_1}, \widehat{T}_{\lambda_2}] \neq 0$), Chebyshev $\max(\Delta k, |\Delta g_v|)$</td>
+                                <td class="py-3 px-3 sm:px-4">Flat ($\mathcal{R}^{(1)} = 0$), Euclidean distance $|x - y|$</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Part B: The 4 Open Questions for Algebra & Physics -->
+            <div class="space-y-4">
+                <div class="text-center max-w-2xl mx-auto">
+                    <span class="text-xs font-mono font-bold uppercase tracking-widest text-indigo-400">Section 6.3 &bull; Open Horizons</span>
+                    <h3 class="text-xl sm:text-2xl font-extrabold text-white mt-1">Four Foundational Questions Beyond the Flat Line</h3>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="math-glass p-4 sm:p-5 rounded-2xl border border-slate-800 space-y-1.5">
+                        <div class="text-xs font-mono font-bold text-brand-300">Q1. Foliated Abstract Algebra</div>
+                        <p class="text-xs text-slate-300 leading-relaxed">
+                            What is the natural axiomatization of a <em>"foliated ring"</em> or <em>"foliated module"</em> when single-valued commutativity is replaced by directional triads and holonomy commutators?
+                        </p>
+                    </div>
+                    <div class="math-glass p-4 sm:p-5 rounded-2xl border border-slate-800 space-y-1.5">
+                        <div class="text-xs font-mono font-bold text-cyan-300">Q2. The Foliated Real Continuum</div>
+                        <p class="text-xs text-slate-300 leading-relaxed">
+                            In the continuum limit of $\mathbb{Z}_m$, how do discrete transport operators transition into directional covariant derivatives and continuous curvature two-forms on $\mathbb{R}$?
+                        </p>
+                    </div>
+                    <div class="math-glass p-4 sm:p-5 rounded-2xl border border-slate-800 space-y-1.5">
+                        <div class="text-xs font-mono font-bold text-amber-300">Q3. Native Complex Phase from Cones</div>
+                        <p class="text-xs text-slate-300 leading-relaxed">
+                            Since circular periodicity is already native to the closed conical shells of $\mathbb{Z}_2$, can $\mathbb{C}$ emerge directly from helical transport without adjoining an extrinsic $i = \sqrt{-1}$?
+                        </p>
+                    </div>
+                    <div class="math-glass p-4 sm:p-5 rounded-2xl border border-slate-800 space-y-1.5">
+                        <div class="text-xs font-mono font-bold text-rose-300">Q4. Quaternionic $(1+3)$ Self-Shift Triad</div>
+                        <p class="text-xs text-slate-300 leading-relaxed">
+                            Does the native $(1+3)$ operational structure of $\mathbb{Z}_m$ (1 shell depth + 3 non-commuting self-shift operators across Left, Vertical, and Right leaves) provide an arithmetic precursor to Hamilton's quaternions $\mathbb{H}$?
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Part C: Reader Comments & Subscription -->
+            <div class="math-glass math-glass-emerald rounded-2xl sm:rounded-3xl p-5 sm:p-8 border border-brand-500/40 space-y-6">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800 pb-4">
+                    <div>
+                        <span class="text-xs font-mono font-bold uppercase tracking-widest text-brand-400">Reader Forum &amp; Updates</span>
+                        <h3 class="text-xl sm:text-2xl font-extrabold text-white mt-0.5">Leave a Comment &amp; Subscribe</h3>
+                    </div>
+                    <a href="https://doi.org/10.5281/zenodo.23456718" target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto text-center px-4 py-2.5 rounded-xl bg-brand-500 text-cosmos-950 font-mono text-xs font-bold hover:bg-brand-400 transition">
+                        Read Full Paper on Zenodo &nearr;
+                    </a>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8">
+                    <!-- Left 7 Cols: Leave a Comment -->
+                    <div class="lg:col-span-7 space-y-4">
+                        <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                            We welcome your thoughts, mathematical questions, and reflections on <em>"Geometry of Integers"</em>. Share a comment below or send it directly to the author.
+                        </p>
+                        <form onsubmit="handleCommentSubmit(event)" class="space-y-3 font-mono text-xs">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                <input id="comment-name" type="text" required placeholder="Your Name / Affiliation" class="w-full bg-cosmos-950 border border-slate-700 rounded-xl px-3.5 py-2.5 text-[16px] sm:text-xs text-white focus:outline-none focus:border-brand-400">
+                                <input id="comment-email" type="email" placeholder="Your Email (optional)" class="w-full bg-cosmos-950 border border-slate-700 rounded-xl px-3.5 py-2.5 text-[16px] sm:text-xs text-white focus:outline-none focus:border-brand-400">
+                            </div>
+                            <textarea id="comment-body" rows="3" required placeholder="Share your comment or question on the Geometry of Integers..." class="w-full bg-cosmos-950 border border-slate-700 rounded-xl px-3.5 py-2.5 text-[16px] sm:text-xs text-white focus:outline-none focus:border-brand-400"></textarea>
+                            <div class="flex flex-col sm:flex-row sm:items-center gap-3">
+                                <button type="submit" class="w-full sm:w-auto px-5 py-3 sm:py-2.5 rounded-xl bg-brand-500 hover:bg-brand-400 text-cosmos-950 font-bold transition shadow-lg shadow-brand-500/20">
+                                    Post Comment
+                                </button>
+                                <button type="button" onclick="emailCommentToAuthor()" class="w-full sm:w-auto px-4 py-3 sm:py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-700 transition">
+                                    Send via Email to Author &nearr;
+                                </button>
+                                <span id="comment-status" class="text-brand-300 text-xs hidden">Thank you! Your comment has been recorded.</span>
+                            </div>
+                        </form>
+
+                        <!-- Posted Comments List -->
+                        <div id="comments-list" class="space-y-2.5 pt-2">
+                            <!-- Populated by JS -->
+                        </div>
+                    </div>
+
+                    <!-- Right 5 Cols: Subscribe Card -->
+                    <div class="lg:col-span-5 bg-cosmos-950/90 p-5 sm:p-6 rounded-2xl border border-slate-800 flex flex-col justify-between space-y-4">
+                        <div class="space-y-2">
+                            <span class="text-[11px] font-mono text-brand-400 font-bold uppercase tracking-wider">Stay Updated</span>
+                            <h4 class="text-base sm:text-lg font-bold text-white font-mono">Subscribe to New Mathematical Concepts</h4>
+                            <p class="text-xs text-slate-400 leading-relaxed">
+                                Receive notifications when new monographs, interactive visualizers, and preprints by Dr. Hassan BALOUI are published.
+                            </p>
+                        </div>
+
+                        <form onsubmit="handleSubscribeSubmit(event)" class="space-y-3 font-mono text-xs">
+                            <input id="sub-email" type="email" required placeholder="Enter your email address..." class="w-full bg-cosmos-900 border border-slate-700 rounded-xl px-3.5 py-2.5 text-[16px] sm:text-xs text-white focus:outline-none focus:border-brand-400">
+                            <button type="submit" class="w-full py-3 sm:py-2.5 rounded-xl bg-gradient-to-r from-brand-500 to-teal-400 text-cosmos-950 font-bold hover:opacity-95 transition shadow-lg shadow-brand-500/20">
+                                Subscribe for Updates
+                            </button>
+                            <div id="sub-status" class="text-brand-300 text-center text-xs hidden"></div>
+                        </form>
+
+                        <div class="pt-3 border-t border-slate-800/80 text-[11px] font-mono text-slate-500 flex items-center justify-between">
+                            <span>Direct Contact:</span>
+                            <a href="mailto:hassan.baloui@gmail.com" class="text-brand-400 hover:underline">hassan.baloui@gmail.com</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+    </main>
+
+    <!-- Footer with Principal Author Card -->
+    <footer class="bg-cosmos-950 border-t border-slate-800/80 py-10 sm:py-12 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-center pb-8 border-b border-slate-900">
+                <div class="md:col-span-7 space-y-3">
+                    <div class="flex items-center space-x-3">
+                        <img src="logo_nmc.png" alt="New Mathematical Concepts Logo" class="w-8 h-8 rounded-lg object-contain bg-cosmos-900 border border-brand-500/30 p-0.5">
+                        <span class="font-bold font-mono text-white text-xs sm:text-base tracking-wider">NEW-MATHEMATICAL-CONCEPTS.ORG</span>
+                    </div>
+                    <p class="text-slate-400 text-xs leading-relaxed max-w-xl">
+                        Interactive storytelling portal for <em>"Geometry of Integers"</em>, illustrating how granting the integers two degrees of freedom across power shells and directional leaves generates intrinsic 2D coordinates, Chebyshev geodesics, non-commutative triadic arithmetic, leaf-local prime factorizations, and prime holography.
+                    </p>
+                    <div class="flex flex-wrap gap-3 sm:gap-4 text-xs font-mono text-slate-400 pt-1">
+                        <a href="https://doi.org/10.5281/zenodo.23456718" target="_blank" rel="noopener noreferrer" class="text-brand-400 hover:underline">DOI: 10.5281/zenodo.23456718</a>
+                        <span>&bull;</span>
+                        <a href="mailto:hassan.baloui@gmail.com" class="hover:text-white transition">hassan.baloui@gmail.com</a>
+                    </div>
+                </div>
+
+                <!-- Author Profile Card -->
+                <div class="md:col-span-5 flex md:justify-end">
+                    <div class="flex items-center gap-4 bg-cosmos-900/90 p-4 rounded-2xl border border-brand-500/30 shadow-xl max-w-md w-full">
+                        <img src="photo_HB.jpg" alt="Dr. Hassan BALOUI" class="w-14 h-14 sm:w-16 sm:h-16 rounded-full border-2 border-brand-400/50 object-cover flex-shrink-0 shadow-md">
+                        <div>
+                            <span class="text-sm font-bold text-white block font-mono">Dr. Hassan BALOUI</span>
+                            <span class="text-xs text-brand-400 font-mono block mb-1">Author &amp; Principal Investigator</span>
+                            <p class="text-[11px] text-slate-400 leading-snug">
+                                Author of <em>Geometry of Integers</em> and founder of New Mathematical Concepts.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pt-6 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 font-mono gap-2 text-center sm:text-left">
+                <div>&copy; 2026 www.new-mathematical-concepts.org &bull; All Rights Reserved</div>
+                <div>Powered by KaTeX &amp; HTML5 Canvas</div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- =========================================================================
+         MATHEMATICAL ENGINE & INTERACTIVE STORYTELLING SCRIPTS
+         ========================================================================= -->
+    <script>
+        // --- CORE MATHEMATICAL FUNCTIONS FROM THE PAPER ---
+        function floorRoot(n, m) {
+            if (n <= 0) return 0;
+            if (m === 1) return n;
+            if (m === 2) return Math.floor(Math.sqrt(n));
+            let k = Math.floor(Math.pow(n, 1 / m));
+            while (Math.pow(k + 1, m) <= n) k++;
+            while (Math.pow(k, m) > n) k--;
+            return k;
+        }
+
+        function shellMedian(k, m) {
+            return (Math.pow(k + 1, m) + Math.pow(k, m) - 1) / 2;
+        }
+
+        function sigmaM(n, m) {
+            const k = floorRoot(n, m);
+            return Math.pow(k + 1, m) + Math.pow(k, m) - n - 1;
+        }
+
+        function birthShell(g, lambda, m) {
+            if (m === 1) return 0;
+            if (m === 2) {
+                if (lambda === 0 || lambda === 1) return Math.ceil(g / 2);
+                return Math.abs(g);
+            }
+            let kappa = 0;
+            if (lambda === 0 || lambda === 1) {
+                while (Math.pow(kappa + 1, m) - Math.pow(kappa, m) <= g) kappa++;
+            } else {
+                const target = 2 * Math.abs(g) + 1;
+                while (Math.pow(kappa + 1, m) - Math.pow(kappa, m) < target) kappa++;
+            }
+            return kappa;
+        }
+
+        function extractCoords(n, m) {
+            const k = floorRoot(n, m);
+            const km = Math.pow(k, m);
+            const kp1m = Math.pow(k + 1, m);
+            const r = n - km;
+            const med = (kp1m + km - 1) / 2;
+
+            const gl = m === 1 ? 0 : n - km;
+            const gv = m === 1 ? 0 : n - med;
+            const gr = m === 1 ? 0 : kp1m - n - 1;
+
+            const k0l = birthShell(gl, 0, m);
+            const k0v = birthShell(gv, 0.5, m);
+            const k0r = birthShell(gr, 1, m);
+
+            return {
+                n, m, k, r,
+                gl, gv, gr,
+                dl: k - k0l,
+                dv: k - k0v,
+                dr: k - k0r,
+                k0l, k0v, k0r,
+                med,
+                sigma: sigmaM(n, m)
+            };
+        }
+
+        // Universal m-degree transport operator \nabla_{\lambda,m}(n, s)
+        function nablaM(n, s, lambda, m) {
+            if (m === 1) return n + s;
+            const k = floorRoot(n, m);
+            const termL = Math.pow(k + s, m) - Math.pow(k, m);
+            const termR = Math.pow(k + s + 1, m) - Math.pow(k + 1, m);
+            return Math.round(n + (1 - lambda) * termL + lambda * termR);
+        }
+
+        function transport(n, lambda, s, m = 2) {
+            return nablaM(n, s, lambda, m);
+        }
+
+        // Extended discrete shift operator \widehat{\nabla}_{\lambda,m}(z, s) on Z_m
+        function hatNablaM(z, s, lambda, m) {
+            if (m === 1) return { val: z + s, bounced: false };
+            if (z === 0) {
+                if (s === 0) return { val: 0, bounced: false };
+                const sgn = Math.sign(s);
+                const absS = Math.abs(s);
+                const val = sgn * Math.round((1 - lambda) * Math.pow(absS, m) + lambda * (Math.pow(absS + 1, m) - 1));
+                return { val: val, bounced: false };
+            }
+            const eps = Math.sign(z);
+            const n = Math.abs(z);
+            const coords = extractCoords(n, m);
+            const dLam = lambda === 0 ? coords.dl : (lambda === 0.5 ? coords.dv : coords.dr);
+            const sTilde = eps * s;
+            if (sTilde >= -dLam) {
+                return { val: eps * nablaM(n, sTilde, lambda, m), bounced: false, dLam, sTilde };
+            } else {
+                return { val: -eps * nablaM(n, Math.abs(sTilde), lambda, m), bounced: true, dLam, sTilde };
+            }
+        }
+
+        function isPrime(num) {
+            if (num < 2) return false;
+            if (num === 2) return true;
+            if (num % 2 === 0) return false;
+            for (let i = 3; i * i <= num; i += 2) {
+                if (num % i === 0) return false;
+            }
+            return true;
+        }
+
+        function primeFactors(num) {
+            if (num < 2) return [];
+            let n = num;
+            const factors = [];
+            for (let p = 2; p * p <= n; p++) {
+                if (n % p === 0) {
+                    let count = 0;
+                    while (n % p === 0) { count++; n /= p; }
+                    factors.push({ p, alpha: count });
+                }
+            }
+            if (n > 1) factors.push({ p: n, alpha: 1 });
+            return factors;
+        }
+
+        function leafNodeFromCoord(g, d, lambda, m) {
+            const k0 = birthShell(g, lambda, m);
+            const k = k0 + d;
+            if (lambda === 0) return Math.pow(k, m) + g;
+            if (lambda === 1) return Math.pow(k + 1, m) - 1 - g;
+            return shellMedian(k, m) + g;
+        }
+
+        function renderKaTeXElement(el) {
+            if (window.renderMathInElement && el) {
+                renderMathInElement(el, {
+                    delimiters: [
+                        { left: '$$', right: '$$', display: true },
+                        { left: '$', right: '$', display: false }
+                    ],
+                    throwOnError: false
+                });
+            }
+        }
+
+        // =====================================================================
+        // WIDGET 00: DIMENSION UNFOLDER (m = 1, 2 up to 35, 3)
+        // =====================================================================
+        let unfolderState = { m: 2, maxN: 35, targetPositions: [], currentPositions: [] };
+
+        function initUnfolder() {
+            const totalMax = 35;
+            for (let n = 0; n <= totalMax; n++) {
+                unfolderState.currentPositions.push({ x: 350, y: 180 });
+                unfolderState.targetPositions.push({ x: 350, y: 180, k: 0, gv: 0 });
+            }
+            setUnfolderMode(2);
+            requestAnimationFrame(animateUnfolder);
+        }
+
+        function setUnfolderMode(m) {
+            unfolderState.m = m;
+            unfolderState.maxN = (m === 3) ? 26 : 35;
+
+            [1, 2, 3].forEach(deg => {
+                const btn = document.getElementById(`btn-unfold-${deg}`);
+                if (btn) {
+                    btn.className = deg === m
+                        ? 'px-2 sm:px-3 py-2 sm:py-1.5 rounded-lg font-mono text-[11px] sm:text-xs font-bold transition bg-brand-500 text-cosmos-950 shadow text-center'
+                        : 'px-2 sm:px-3 py-2 sm:py-1.5 rounded-lg font-mono text-[11px] sm:text-xs font-bold transition bg-slate-800 text-slate-300 hover:bg-slate-700 text-center';
+                }
+            });
+
+            const canvas = document.getElementById('unfolder-canvas');
+            const W = canvas.width, H = canvas.height;
+            const totalMax = 35;
+
+            for (let n = 0; n <= totalMax; n++) {
+                if (m === 1) {
+                    const pad = 22;
+                    const x = pad + (n / totalMax) * (W - 2 * pad);
+                    const y = H / 2;
+                    unfolderState.targetPositions[n] = { x, y, k: n, gv: 0 };
+                } else if (m === 2) {
+                    const c = extractCoords(n, 2);
+                    const x = W / 2 + c.gv * 56;
+                    const y = 36 + c.k * 56;
+                    unfolderState.targetPositions[n] = { x, y, k: c.k, gv: c.gv };
+                } else if (m === 3) {
+                    const c = extractCoords(Math.min(n, 26), 3);
+                    const x = W / 2 + c.gv * 33;
+                    const y = 60 + c.k * 115;
+                    unfolderState.targetPositions[n] = { x, y, k: c.k, gv: c.gv };
+                }
+            }
+
+            const cap = document.getElementById('unfolder-caption');
+            if (m === 1) {
+                cap.innerHTML = `
+                    <div class="p-2.5 rounded-xl bg-cosmos-950 border border-slate-800"><span class="text-amber-400 font-bold">Regime:</span> Flat Peano Line ($\\mathbb{N}_1$)</div>
+                    <div class="p-2.5 rounded-xl bg-cosmos-950 border border-slate-800"><span class="text-brand-400 font-bold">Degrees of Freedom:</span> 1 (Zero Lateral Width)</div>
+                    <div class="p-2.5 rounded-xl bg-cosmos-950 border border-slate-800"><span class="text-indigo-400 font-bold">Depth vs Scalar:</span> Identical ($d = n$)</div>
+                `;
+            } else if (m === 2) {
+                cap.innerHTML = `
+                    <div class="p-2.5 rounded-xl bg-cosmos-950 border border-slate-800"><span class="text-brand-400 font-bold">Regime:</span> Quadratic Lattice ($\\mathbb{N}_2, 0 \\le n \\le 35$)</div>
+                    <div class="p-2.5 rounded-xl bg-cosmos-950 border border-slate-800"><span class="text-rose-400 font-bold">Shell $S_5$ Full Cardinality:</span> $|S_{5,2}| = 11$ ($25..35$)</div>
+                    <div class="p-2.5 rounded-xl bg-cosmos-950 border border-slate-800"><span class="text-cyan-400 font-bold">Principal Vertical Leaf:</span> $V_{0,2} = \\{k^2+k\\}$</div>
+                `;
+            } else {
+                cap.innerHTML = `
+                    <div class="p-2.5 rounded-xl bg-cosmos-950 border border-slate-800"><span class="text-indigo-400 font-bold">Regime:</span> Cubic Lattice ($\\mathbb{N}_3, 0 \\le n \\le 26$)</div>
+                    <div class="p-2.5 rounded-xl bg-cosmos-950 border border-slate-800"><span class="text-rose-400 font-bold">Shell Cardinality:</span> $|S_{k,3}| = 3k^2+3k+1$</div>
+                    <div class="p-2.5 rounded-xl bg-cosmos-950 border border-slate-800"><span class="text-cyan-400 font-bold">Principal Vertical Leaf:</span> $V_{0,3} = \\{0, 4, 17, \\dots\\}$</div>
+                `;
+            }
+            renderKaTeXElement(cap);
+        }
+
+        function animateUnfolder() {
+            const canvas = document.getElementById('unfolder-canvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            const m = unfolderState.m;
+            const maxN = unfolderState.maxN;
+
+            // Interpolate positions
+            for (let n = 0; n <= 35; n++) {
+                const cur = unfolderState.currentPositions[n];
+                const tgt = unfolderState.targetPositions[n];
+                cur.x += (tgt.x - cur.x) * 0.14;
+                cur.y += (tgt.y - cur.y) * 0.14;
+            }
+
+            // Draw principal vertical leaf V_{0,m} when m > 1
+            if (m > 1) {
+                ctx.strokeStyle = 'rgba(45, 212, 191, 0.28)';
+                ctx.lineWidth = 2;
+                ctx.setLineDash([4, 4]);
+                ctx.beginPath();
+                ctx.moveTo(canvas.width / 2, 16);
+                ctx.lineTo(canvas.width / 2, canvas.height - 16);
+                ctx.stroke();
+                ctx.setLineDash([]);
+            }
+
+            // Connect consecutive integers in same shell
+            ctx.lineWidth = 1.5;
+            for (let n = 0; n < maxN; n++) {
+                const k1 = floorRoot(n, m);
+                const k2 = floorRoot(n + 1, m);
+                if (m === 1 || k1 === k2) {
+                    ctx.strokeStyle = m === 1 ? 'rgba(245, 158, 11, 0.45)' : 'rgba(244, 63, 94, 0.35)';
+                    ctx.beginPath();
+                    ctx.moveTo(unfolderState.currentPositions[n].x, unfolderState.currentPositions[n].y);
+                    ctx.lineTo(unfolderState.currentPositions[n + 1].x, unfolderState.currentPositions[n + 1].y);
+                    ctx.stroke();
+                }
+            }
+
+            // Draw nodes up to maxN
+            const radius = m === 1 ? 8.5 : 11.5;
+            for (let n = 0; n <= maxN; n++) {
+                const p = unfolderState.currentPositions[n];
+                const t = unfolderState.targetPositions[n];
+                const isCentralLeaf = m > 1 && t.gv === 0;
+                const isPower = n === Math.pow(t.k, m);
+
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, radius, 0, Math.PI * 2);
+                ctx.fillStyle = isCentralLeaf ? '#0d9488' : (isPower ? '#312e81' : '#0f172a');
+                ctx.fill();
+                ctx.lineWidth = 1.4;
+                ctx.strokeStyle = isCentralLeaf ? '#5eead4' : (isPower ? '#818cf8' : '#334155');
+                ctx.stroke();
+
+                ctx.fillStyle = '#f8fafc';
+                ctx.font = m === 1 ? 'bold 8.5px monospace' : 'bold 10px monospace';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(n.toString(), p.x, p.y);
+            }
+
+            requestAnimationFrame(animateUnfolder);
+        }
+
+        // =====================================================================
+        // WIDGET 01: 4-WAY COORDINATE INSPECTOR & 4-LINE ALGEBRAIC VERIFICATION
+        // =====================================================================
+        let inspectorSelectedN2 = 10;
+
+        function setInspectorPreset(n, m) {
+            document.getElementById('insp-n').value = n;
+            document.getElementById('insp-m').value = m;
+            if (m === 2 && n <= 35) inspectorSelectedN2 = n;
+            updateCoordinateInspector();
+        }
+
+        function updateCoordinateInspector() {
+            const n = Math.max(0, parseInt(document.getElementById('insp-n').value, 10) || 0);
+            const m = parseInt(document.getElementById('insp-m').value, 10) || 2;
+            if (m === 2 && n <= 35) inspectorSelectedN2 = n;
+
+            const c = extractCoords(n, m);
+            const out = document.getElementById('inspector-output');
+
+            // Build the 4-line algebraic verification using the leaf & shell equations from the paper
+            let verifyLines = '';
+            if (m === 2) {
+                const absGv = Math.abs(c.gv);
+                verifyLines = `
+                    <div class="p-2 rounded-lg bg-rose-950/30 border border-rose-500/30 text-slate-200 overflow-x-auto custom-scrollbar">
+                        <span class="text-rose-400 font-bold">1. Shell $S_{${c.k}}$:</span> $k^2 + r = ${c.k}^2 + ${c.r} = \\mathbf{${n}}$
+                    </div>
+                    <div class="p-2 rounded-lg bg-emerald-950/30 border border-emerald-500/30 text-slate-200 overflow-x-auto custom-scrollbar">
+                        <span class="text-emerald-400 font-bold">2. Left Leaf $L_{${c.gl}}(${c.dl})$:</span> $(\\lceil g_l/2 \\rceil + d_l)^2 + g_l = (${c.k0l} + ${c.dl})^2 + ${c.gl} = \\mathbf{${n}}$
+                    </div>
+                    <div class="p-2 rounded-lg bg-cyan-950/30 border border-cyan-500/30 text-slate-200 overflow-x-auto custom-scrollbar">
+                        <span class="text-cyan-300 font-bold">3. Vertical Leaf $V_{${c.gv}}(${c.dv})$:</span> $(|g_v|+d_v)^2 + d_v + g_v + |g_v| = (${absGv}+${c.dv})^2 + ${c.dv} + (${c.gv}) + ${absGv} = \\mathbf{${n}}$
+                    </div>
+                    <div class="p-2 rounded-lg bg-violet-950/30 border border-violet-500/30 text-slate-200 overflow-x-auto custom-scrollbar">
+                        <span class="text-violet-300 font-bold">4. Right Leaf $R_{${c.gr}}(${c.dr})$:</span> $(\\lceil g_r/2 \\rceil + d_r + 1)^2 - 1 - g_r = (${c.k0r} + ${c.dr} + 1)^2 - 1 - ${c.gr} = \\mathbf{${n}}$
+                    </div>
+                `;
+            } else {
+                verifyLines = `
+                    <div class="p-2 rounded-lg bg-rose-950/30 border border-rose-500/30 text-slate-200 overflow-x-auto custom-scrollbar">
+                        <span class="text-rose-400 font-bold">1. Shell $S_{${c.k},${m}}$:</span> $k^{${m}} + r = ${c.k}^{${m}} + ${c.r} = \\mathbf{${n}}$
+                    </div>
+                    <div class="p-2 rounded-lg bg-emerald-950/30 border border-emerald-500/30 text-slate-200 overflow-x-auto custom-scrollbar">
+                        <span class="text-emerald-400 font-bold">2. Left Leaf $L_{${c.gl},${m}}(${c.dl})$:</span> $(k_0 + d_l)^{${m}} + g_l = (${c.k0l} + ${c.dl})^{${m}} + ${c.gl} = \\mathbf{${n}}$
+                    </div>
+                    <div class="p-2 rounded-lg bg-cyan-950/30 border border-cyan-500/30 text-slate-200 overflow-x-auto custom-scrollbar">
+                        <span class="text-cyan-300 font-bold">3. Vertical Leaf $V_{${c.gv},${m}}(${c.dv})$:</span> $V_{0,${m}}(${c.k0v}+${c.dv}) + g_v = ${c.med} + (${c.gv}) = \\mathbf{${n}}$
+                    </div>
+                    <div class="p-2 rounded-lg bg-violet-950/30 border border-violet-500/30 text-slate-200 overflow-x-auto custom-scrollbar">
+                        <span class="text-violet-300 font-bold">4. Right Leaf $R_{${c.gr},${m}}(${c.dr})$:</span> $(k_0 + d_r + 1)^{${m}} - g_r - 1 = (${c.k0r} + ${c.dr} + 1)^{${m}} - ${c.gr} - 1 = \\mathbf{${n}}$
+                    </div>
+                `;
+            }
+
+            out.innerHTML = `
+                <div class="p-3 rounded-xl bg-cosmos-900 border border-slate-800 text-center overflow-x-auto custom-scrollbar">
+                    <div class="text-slate-400 text-[11px] mb-1">Partitioned Coordinate Matrix $M_{${n},${m}} = \\begin{bmatrix} k & g_l & g_v & g_r \\\\ r & d_l & d_v & d_r \\end{bmatrix}$</div>
+                    <div class="text-sm text-brand-300">
+                        $$M_{${n},${m}} = \\left[\\begin{array}{c|ccc} ${c.k} & ${c.gl} & ${c.gv} & ${c.gr} \\\\ ${c.r} & ${c.dl} & ${c.dv} & ${c.dr} \\end{array}\\right]$$
+                    </div>
+                </div>
+                <div class="space-y-1.5 text-[11px]">
+                    <div class="text-slate-400 font-bold uppercase text-[10px] tracking-wider">4-Line Algebraic Verification (Shell &amp; Leaf Equations):</div>
+                    ${verifyLines}
+                </div>
+            `;
+            renderKaTeXElement(out);
+            drawInspectorLattice();
+        }
+
+        function drawInspectorLattice() {
+            const canvas = document.getElementById('inspector-canvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            const sel = extractCoords(inspectorSelectedN2, 2);
+            const maxK = 5;
+            const posOf = (k, gv) => ({
+                x: canvas.width / 2 + gv * 52,
+                y: 36 + k * 54
+            });
+
+            // 1. Highlight Shell S_k (Rose)
+            ctx.strokeStyle = 'rgba(244, 63, 94, 0.75)';
+            ctx.lineWidth = 4;
+            ctx.beginPath();
+            ctx.moveTo(posOf(sel.k, -sel.k).x, posOf(sel.k, -sel.k).y);
+            ctx.lineTo(posOf(sel.k, sel.k).x, posOf(sel.k, sel.k).y);
+            ctx.stroke();
+
+            // 2. Highlight Left Leaf L_{g_l} (Emerald)
+            ctx.strokeStyle = 'rgba(16, 185, 129, 0.85)';
+            ctx.lineWidth = 3.5;
+            ctx.beginPath();
+            for (let k = sel.k0l; k <= maxK; k++) {
+                const nLeaf = k * k + sel.gl;
+                const gv = nLeaf - (k * k + k);
+                const p = posOf(k, gv);
+                if (k === sel.k0l) ctx.moveTo(p.x, p.y);
+                else ctx.lineTo(p.x, p.y);
+            }
+            ctx.stroke();
+
+            // 3. Highlight Vertical Leaf V_{g_v} (Cyan)
+            ctx.strokeStyle = 'rgba(34, 211, 238, 0.85)';
+            ctx.lineWidth = 3.5;
+            ctx.beginPath();
+            for (let k = sel.k0v; k <= maxK; k++) {
+                const p = posOf(k, sel.gv);
+                if (k === sel.k0v) ctx.moveTo(p.x, p.y);
+                else ctx.lineTo(p.x, p.y);
+            }
+            ctx.stroke();
+
+            // 4. Highlight Right Leaf R_{g_r} (Violet)
+            ctx.strokeStyle = 'rgba(167, 139, 250, 0.85)';
+            ctx.lineWidth = 3.5;
+            ctx.beginPath();
+            for (let k = sel.k0r; k <= maxK; k++) {
+                const nLeaf = (k + 1) * (k + 1) - 1 - sel.gr;
+                const gv = nLeaf - (k * k + k);
+                const p = posOf(k, gv);
+                if (k === sel.k0r) ctx.moveTo(p.x, p.y);
+                else ctx.lineTo(p.x, p.y);
+            }
+            ctx.stroke();
+
+            // Draw all nodes 0..35
+            for (let k = 0; k <= maxK; k++) {
+                ctx.fillStyle = '#64748b';
+                ctx.font = '11px monospace';
+                ctx.textAlign = 'right';
+                ctx.fillText(`S_${k}`, posOf(k, -k).x - 24, posOf(k, -k).y + 4);
+
+                for (let gv = -k; gv <= k; gv++) {
+                    const n = k * k + k + gv;
+                    const p = posOf(k, gv);
+                    const isSelected = n === inspectorSelectedN2;
+
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, isSelected ? 15 : 12, 0, Math.PI * 2);
+                    ctx.fillStyle = isSelected ? '#14b8a6' : '#0f172a';
+                    ctx.fill();
+                    ctx.lineWidth = isSelected ? 3 : 1.5;
+                    ctx.strokeStyle = isSelected ? '#ffffff' : (gv === 0 ? '#2dd4bf' : '#334155');
+                    ctx.stroke();
+
+                    ctx.fillStyle = isSelected ? '#040711' : '#e2e8f0';
+                    ctx.font = isSelected ? 'bold 12px monospace' : '11px monospace';
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'middle';
+                    ctx.fillText(n.toString(), p.x, p.y);
+                }
+            }
+        }
+
+        function initInspectorEvents() {
+            const canvas = document.getElementById('inspector-canvas');
+            if (!canvas) return;
+            canvas.addEventListener('click', (e) => {
+                const rect = canvas.getBoundingClientRect();
+                const scaleX = canvas.width / rect.width;
+                const scaleY = canvas.height / rect.height;
+                const mx = (e.clientX - rect.left) * scaleX;
+                const my = (e.clientY - rect.top) * scaleY;
+
+                for (let k = 0; k <= 5; k++) {
+                    for (let gv = -k; gv <= k; gv++) {
+                        const x = canvas.width / 2 + gv * 52;
+                        const y = 36 + k * 54;
+                        if (Math.hypot(mx - x, my - y) <= 20) {
+                            const n = k * k + k + gv;
+                            setInspectorPreset(n, 2);
+                            return;
+                        }
+                    }
+                }
+            });
+        }
+
+        // =====================================================================
+        // WIDGET 02: NON-OVERSHOOTING 1-ZIGZAG GEODESIC ROUTER
+        // =====================================================================
+        let geoAnim = { active: false, progress: 0, start: null, relay: null, target: null };
+
+        function setGeodesicPreset(x, y) {
+            document.getElementById('geo-x').value = x;
+            document.getElementById('geo-y').value = y;
+            computeGeodesicRoute();
+        }
+
+        function computeGeodesicRoute() {
+            const x = Math.max(0, parseInt(document.getElementById('geo-x').value, 10) || 0);
+            const y = Math.max(0, parseInt(document.getElementById('geo-y').value, 10) || 0);
+            const m = 2;
+
+            const u = Math.min(x, y);
+            const v = Math.max(x, y);
+            const cu = extractCoords(u, m);
+            const cv = extractCoords(v, m);
+
+            const k_u = cu.k;
+            const k_v = cv.k;
+            const g_v_source = cu.gv;
+            const g_v_target = cv.gv;
+
+            const deltaK = k_v - k_u;
+            const deltaG = g_v_target - g_v_source;
+            const absDeltaG = Math.abs(deltaG);
+            const lambdaStar = deltaG > 0 ? 1 : (deltaG < 0 ? 0 : 0.5);
+
+            // 1. Clipped diagonal steps (never overshoot target shell k_v)
+            const diagSteps = Math.min(deltaK, absDeltaG);
+
+            // 2. Physical Turning Integer X
+            const turningInteger = transport(u, lambdaStar, diagSteps, m);
+            const k_X = floorRoot(turningInteger, m);
+            const cX = extractCoords(turningInteger, m);
+
+            // 3. Second Leg Routing (Longitudinal vs. Transverse Regime)
+            let secondLegSteps = 0;
+            let secondLegType = "";
+            let routingDescription = "";
+            let isLongitudinal = deltaK >= absDeltaG;
+
+            if (isLongitudinal) {
+                secondLegSteps = deltaK - diagSteps;
+                secondLegType = "vertical (\\lambda = 1/2)";
+                routingDescription = `Diagonal ($${lambdaStar === 1 ? '\\lambda=1' : (lambdaStar === 0 ? '\\lambda=0' : '\\lambda=1/2')}$) for $${diagSteps}$ steps to turning integer $X = ${turningInteger}$ (Shell $S_{${k_X}}$, intersecting target's vertical leaf $V_{${g_v_target}}$), followed by $${secondLegSteps}$ vertical steps ($\\lambda=1/2$) down to $${v}$.`;
+            } else {
+                secondLegSteps = absDeltaG - diagSteps;
+                secondLegType = `horizontal intra-shell (along Shell S_{${k_v}})`;
+                routingDescription = `Diagonal ($${lambdaStar === 1 ? '\\lambda=1' : '\\lambda=0'}$) for $${diagSteps}$ steps to turning integer $X = ${turningInteger}$ (intersecting target Shell $S_{${k_v}}$), followed by $${secondLegSteps}$ horizontal intra-shell steps along $S_{${k_v}}$ to $${v}$.`;
+            }
+
+            const totalGeodesicDistance = diagSteps + secondLegSteps;
+
+            geoAnim = {
+                active: true,
+                progress: 0,
+                start: cu,
+                relay: cX,
+                target: cv,
+                lambdaStar,
+                diagSteps,
+                secondLegSteps,
+                isLongitudinal,
+                dist: totalGeodesicDistance,
+                dk: deltaK,
+                absDgv: absDeltaG
+            };
+
+            const regimeBadge = isLongitudinal
+                ? `<span class="px-2 py-0.5 rounded bg-brand-500/20 text-brand-300 border border-brand-500/40 text-[10px]">Longitudinal ($\\Delta k \\ge |\\Delta g|$)</span>`
+                : `<span class="px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/40 text-[10px]">Transverse ($|\\Delta g| > \\Delta k$)</span>`;
+
+            const tel = document.getElementById('geodesic-telemetry');
+            tel.innerHTML = `
+                <div class="flex flex-wrap items-center justify-between border-b border-slate-800 pb-2 gap-2">
+                    <span class="text-brand-300 font-bold uppercase">1-Zigzag Routing</span>
+                    ${regimeBadge}
+                </div>
+                <div class="flex flex-wrap justify-between gap-1"><span>Source $u = \\min(x,y)$:</span><span class="text-emerald-400 font-bold">$u = ${u}$ $(k=${cu.k}, g_v=${cu.gv})$</span></div>
+                <div class="flex flex-wrap justify-between gap-1"><span>Target $v = \\max(x,y)$:</span><span class="text-rose-400 font-bold">$v = ${v}$ $(k=${cv.k}, g_v=${cv.gv})$</span></div>
+                <div class="flex flex-wrap justify-between gap-1"><span>1st Leg ($s_{\\text{diag}} = \\min(\\Delta k, |\\Delta g|)$):</span><span class="text-violet-300 font-bold">$${diagSteps}$ steps ($\\lambda^* = ${lambdaStar === 0.5 ? '1/2' : lambdaStar}$)</span></div>
+                <div class="flex flex-wrap justify-between gap-1"><span>Turning Integer $X_{\\text{actual}}(u,v)$:</span><span class="text-violet-400 font-bold">$X = ${turningInteger}$ $(k_X=${k_X}, g_v=${cX.gv})$</span></div>
+                <div class="flex flex-wrap justify-between gap-1"><span>2nd Leg Routing:</span><span class="${isLongitudinal ? 'text-cyan-300' : 'text-amber-300'} font-bold">$${secondLegSteps}$ steps (${secondLegType})</span></div>
+                <div class="p-2.5 rounded-xl bg-cosmos-900 border border-slate-800 text-[11px] text-slate-300 leading-relaxed">
+                    ${routingDescription}
+                </div>
+                <div class="pt-2 border-t border-slate-800 flex flex-wrap justify-between items-center gap-2 text-xs sm:text-sm">
+                    <span class="text-brand-400 font-bold">Chebyshev Metric $\\delta_2(x,y)$:</span>
+                    <span class="px-2.5 py-1 rounded bg-brand-500/20 text-brand-300 border border-brand-500/40 font-bold">$${diagSteps} + ${secondLegSteps} = \\max(${deltaK}, ${absDeltaG}) = ${totalGeodesicDistance}$</span>
+                </div>
+            `;
+            renderKaTeXElement(tel);
+            requestAnimationFrame(animateGeodesicCanvas);
+        }
+
+        function animateGeodesicCanvas() {
+            const canvas = document.getElementById('geodesic-canvas');
+            if (!canvas || !geoAnim.start) return;
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            const { start, relay, target, isLongitudinal } = geoAnim;
+            const minG = Math.min(start.gv, relay.gv, target.gv, 0) - 3;
+            const maxG = Math.max(start.gv, relay.gv, target.gv, 0) + 3;
+            const minK = Math.max(0, Math.min(start.k, relay.k, target.k) - 2);
+            const maxK = Math.max(start.k, relay.k, target.k) + 2;
+
+            const padX = 54, padY = 42;
+            const mapX = (gv) => padX + ((gv - minG) / Math.max(1, maxG - minG)) * (canvas.width - 2 * padX);
+            const mapY = (k) => padY + ((k - minK) / Math.max(1, maxK - minK)) * (canvas.height - 2 * padY);
+
+            // Grid
+            ctx.strokeStyle = '#1e293b';
+            ctx.lineWidth = 1;
+            for (let g = minG; g <= maxG; g++) {
+                ctx.beginPath(); ctx.moveTo(mapX(g), padY / 2); ctx.lineTo(mapX(g), canvas.height - padY / 2); ctx.stroke();
+            }
+            for (let k = minK; k <= maxK; k++) {
+                ctx.beginPath(); ctx.moveTo(padX / 2, mapY(k)); ctx.lineTo(canvas.width - padX / 2, mapY(k)); ctx.stroke();
+            }
+
+            // Highlight Target Shell S_{k_v} barrier line
+            ctx.strokeStyle = 'rgba(244, 63, 94, 0.28)';
+            ctx.lineWidth = 1.5;
+            ctx.setLineDash([4, 4]);
+            ctx.beginPath();
+            ctx.moveTo(padX / 2, mapY(target.k));
+            ctx.lineTo(canvas.width - padX / 2, mapY(target.k));
+            ctx.stroke();
+            ctx.setLineDash([]);
+            ctx.fillStyle = '#fb7185';
+            ctx.font = '10px monospace';
+            ctx.textAlign = 'left';
+            ctx.fillText(`Target Shell S_${target.k} (k_v = ${target.k})`, padX / 2 + 4, mapY(target.k) - 6);
+
+            // Principal Vertical Leaf V_0 (g_v = 0)
+            ctx.strokeStyle = 'rgba(45, 212, 191, 0.35)';
+            ctx.lineWidth = 2;
+            ctx.beginPath(); ctx.moveTo(mapX(0), padY / 2); ctx.lineTo(mapX(0), canvas.height - padY / 2); ctx.stroke();
+            ctx.fillStyle = '#2dd4bf';
+            ctx.font = '10px monospace';
+            ctx.fillText('V_0 Leaf (g_v = 0)', mapX(0) + 6, 18);
+
+            const pS = { x: mapX(start.gv), y: mapY(start.k) };
+            const pX = { x: mapX(relay.gv), y: mapY(relay.k) };
+            const pT = { x: mapX(target.gv), y: mapY(target.k) };
+
+            geoAnim.progress = Math.min(1, geoAnim.progress + 0.04);
+            const p = geoAnim.progress;
+
+            // Segment 1: Start -> Clipped Turning Point X
+            const seg1P = Math.min(1, p * 2);
+            ctx.strokeStyle = '#a78bfa';
+            ctx.lineWidth = 3.5;
+            ctx.beginPath();
+            ctx.moveTo(pS.x, pS.y);
+            ctx.lineTo(pS.x + (pX.x - pS.x) * seg1P, pS.y + (pX.y - pS.y) * seg1P);
+            ctx.stroke();
+
+            // Segment 2: Turning Point X -> Target
+            if (p > 0.5) {
+                const seg2P = (p - 0.5) * 2;
+                ctx.strokeStyle = isLongitudinal ? '#22d3ee' : '#fbbf24';
+                ctx.lineWidth = 3.5;
+                ctx.beginPath();
+                ctx.moveTo(pX.x, pX.y);
+                ctx.lineTo(pX.x + (pT.x - pX.x) * seg2P, pX.y + (pT.y - pX.y) * seg2P);
+                ctx.stroke();
+            }
+
+            const drawBadge = (pt, label, color, yOffset = -28) => {
+                ctx.fillStyle = color;
+                ctx.beginPath(); ctx.arc(pt.x, pt.y, 7, 0, Math.PI * 2); ctx.fill();
+                ctx.fillStyle = '#090d16';
+                ctx.strokeStyle = color;
+                ctx.lineWidth = 1.5;
+                ctx.font = 'bold 11px monospace';
+                const w = ctx.measureText(label).width + 14;
+                ctx.fillRect(pt.x - w / 2, pt.y + yOffset, w, 18);
+                ctx.strokeRect(pt.x - w / 2, pt.y + yOffset, w, 18);
+                ctx.fillStyle = '#f8fafc';
+                ctx.textAlign = 'center';
+                ctx.fillText(label, pt.x, pt.y + yOffset + 12);
+            };
+
+            drawBadge(pS, `u=${start.n}`, '#10b981', -28);
+            if (relay.n !== start.n && relay.n !== target.n) {
+                drawBadge(pX, `X=${relay.n}`, '#a78bfa', isLongitudinal ? -28 : 12);
+            }
+            drawBadge(pT, `v=${target.n}`, '#f43f5e', -28);
+
+            if (geoAnim.progress < 1) requestAnimationFrame(animateGeodesicCanvas);
+        }
+
+        // =====================================================================
+        // WIDGET 03: FOLIATED TRIAD CALCULATOR (ADDITION, SUBTRACTION, MULTIPLICATION)
+        // =====================================================================
+        function setArithPreset(a, b, op, m) {
+            document.getElementById('arith-a').value = a;
+            document.getElementById('arith-b').value = b;
+            document.getElementById('arith-op').value = op;
+            document.getElementById('arith-m').value = m;
+            runFoliatedCalculator();
+        }
+
+        function evalTriadOp(a, b, op, m) {
+            const lambdas = [0, 0.5, 1];
+            if (op === '+') {
+                return lambdas.map(lam => hatNablaM(a, b, lam, m));
+            } else if (op === '-') {
+                return lambdas.map(lam => hatNablaM(a, -b, lam, m));
+            } else if (op === '*') {
+                return lambdas.map(lam => hatNablaM(a, a * (b - 1), lam, m));
+            }
+            return [];
+        }
+
+        function runFoliatedCalculator() {
+            const a = parseInt(document.getElementById('arith-a').value, 10) || 0;
+            const b = parseInt(document.getElementById('arith-b').value, 10) || 0;
+            const op = document.getElementById('arith-op').value;
+            const m = parseInt(document.getElementById('arith-m').value, 10) || 2;
+            const out = document.getElementById('arith-output');
+
+            const symMap = { '+': `\\oplus_${m}`, '-': `\\ominus_${m}`, '*': `\\otimes_${m}` };
+            const sym = symMap[op] || `\\oplus_${m}`;
+            const forward = evalTriadOp(a, b, op, m);
+            const reverse = evalTriadOp(b, a, op, m);
+
+            const fVals = forward.map(x => x.val);
+            const rVals = reverse.map(x => x.val);
+            const intersection = fVals.filter(v => rVals.includes(v));
+            const anyBounce = forward.some(x => x.bounced);
+
+            out.innerHTML = `
+                <div class="p-4 rounded-2xl bg-cosmos-950 border border-brand-500/40 space-y-2.5">
+                    <div class="flex flex-wrap justify-between items-center border-b border-slate-800 pb-2 gap-1">
+                        <span class="text-brand-300 font-bold">Forward Triad: $${a} ${sym} ${b}$</span>
+                        <span class="text-[11px] text-slate-400">Anchor $a=${a}$, Driver $b=${b}$</span>
+                    </div>
+                    <div class="grid grid-cols-3 gap-2 text-center pt-1">
+                        <div class="p-2.5 rounded-xl bg-emerald-950/30 border border-emerald-500/30">
+                            <div class="text-[10px] text-emerald-400">$\\lambda = 0$ (Left)</div>
+                            <div class="text-sm sm:text-base font-bold text-white mt-0.5">${fVals[0]}</div>
+                            ${forward[0].bounced ? '<span class="text-[9px] text-rose-400 block">Bounce!</span>' : ''}
+                        </div>
+                        <div class="p-2.5 rounded-xl bg-cyan-950/30 border border-cyan-500/30">
+                            <div class="text-[10px] text-cyan-300">$\\lambda = 1/2$ (Vert)</div>
+                            <div class="text-sm sm:text-base font-bold text-white mt-0.5">${fVals[1]}</div>
+                            ${forward[1].bounced ? '<span class="text-[9px] text-rose-400 block">Bounce!</span>' : ''}
+                        </div>
+                        <div class="p-2.5 rounded-xl bg-violet-950/30 border border-violet-500/30">
+                            <div class="text-[10px] text-violet-300">$\\lambda = 1$ (Right)</div>
+                            <div class="text-sm sm:text-base font-bold text-white mt-0.5">${fVals[2]}</div>
+                            ${forward[2].bounced ? '<span class="text-[9px] text-rose-400 block">Bounce!</span>' : ''}
+                        </div>
+                    </div>
+                    ${anyBounce ? `<div class="text-[11px] text-rose-300 pt-1">&bull; Branches with inward shift exceeding local leaf depth bounced across $0$ into $\\mathbb{Z}_${m}^-$!</div>` : ''}
+                </div>
+
+                <div class="p-4 rounded-2xl bg-cosmos-950 border border-amber-500/40 space-y-2.5">
+                    <div class="flex flex-wrap justify-between items-center border-b border-slate-800 pb-2 gap-1">
+                        <span class="text-amber-300 font-bold">Reverse Triad: $${b} ${sym} ${a}$</span>
+                        <span class="text-[11px] text-slate-400">Commutativity Comparison</span>
+                    </div>
+                    <div class="grid grid-cols-3 gap-2 text-center pt-1">
+                        <div class="p-2.5 rounded-xl bg-slate-900 border border-slate-800">
+                            <div class="text-[10px] text-slate-400">$\\lambda = 0$</div>
+                            <div class="text-sm sm:text-base font-bold text-white mt-0.5">${rVals[0]}</div>
+                        </div>
+                        <div class="p-2.5 rounded-xl bg-slate-900 border border-slate-800">
+                            <div class="text-[10px] text-slate-400">$\\lambda = 1/2$</div>
+                            <div class="text-sm sm:text-base font-bold text-white mt-0.5">${rVals[1]}</div>
+                        </div>
+                        <div class="p-2.5 rounded-xl bg-slate-900 border border-slate-800">
+                            <div class="text-[10px] text-slate-400">$\\lambda = 1$</div>
+                            <div class="text-sm sm:text-base font-bold text-white mt-0.5">${rVals[2]}</div>
+                        </div>
+                    </div>
+                    <div class="text-[11px] pt-1 ${intersection.includes(31) ? 'text-amber-300 font-bold' : 'text-slate-400'}">
+                        Intersection: ${intersection.length > 0 ? `$\\{\\mathbf{${Array.from(new Set(intersection)).join(', ')}\\}}$ ${intersection.includes(31) ? '&mdash; Unique Cross-Direction Prime 31 (Corollary 3.2)!' : ''}` : '$\\emptyset$ (Strictly Disjoint Triads)'}
+                    </div>
+                </div>
+            `;
+            renderKaTeXElement(out);
+        }
+
+        // =====================================================================
+        // WIDGET 04: THE x = 861 MULTI-FOLIATION FACTORIZATION PRISM
+        // =====================================================================
+        function setPrismPreset(x) {
+            document.getElementById('prism-x').value = x;
+            runFactorizationPrism();
+        }
+
+        function formatLeafDecomp(x, lambda, m) {
+            const c = extractCoords(x, m);
+            const g = lambda === 0 ? c.gl : (lambda === 0.5 ? c.gv : c.gr);
+            const d = lambda === 0 ? c.dl : (lambda === 0.5 ? c.dv : c.dr);
+            const rootNode = leafNodeFromCoord(g, 0, lambda, m);
+            const unitNode = leafNodeFromCoord(g, 1, lambda, m);
+
+            if (d === 0) return { d, status: 'Leaf Root ($d=0$)', expr: `z_{${g}} = ${rootNode}` };
+            if (d === 1) return { d, status: 'Leaf Unit ($d=1$)', expr: `u_{${g}} = ${unitNode}` };
+
+            const pf = primeFactors(d);
+            if (pf.length === 1 && pf[0].alpha === 1) {
+                return { d, status: '<span class="text-emerald-400 font-bold">Leaf-Depth Prime ($\\mathcal{D}_{\\lambda,m}$)</span>', expr: `${x}^{\\odot 1} \\; (d = ${d} \\in \\mathbb{P})` };
+            }
+
+            const dStr = pf.map(f => f.alpha > 1 ? `${f.p}^{${f.alpha}}` : `${f.p}`).join(' \\times ');
+            const qStr = pf.map(f => {
+                const qScalar = leafNodeFromCoord(g, f.p, lambda, m);
+                return f.alpha > 1 ? `${qScalar}^{\\odot ${f.alpha}}` : `${qScalar}`;
+            }).join(` \\odot_{${lambda === 0.5 ? '1/2' : lambda},${m}} `);
+
+            return { d, status: `Composite Depth ($d = ${dStr}$)`, expr: `${x} = ${qStr}` };
+        }
+
+        function runFactorizationPrism() {
+            const x = Math.max(2, parseInt(document.getElementById('prism-x').value, 10) || 861);
+            const pf1 = primeFactors(x).map(f => f.alpha > 1 ? `${f.p}^{${f.alpha}}` : `${f.p}`).join(' \\times ');
+
+            const c2 = extractCoords(x, 2);
+            const L2 = formatLeafDecomp(x, 0, 2);
+            const V2 = formatLeafDecomp(x, 0.5, 2);
+            const R2 = formatLeafDecomp(x, 1, 2);
+
+            const c3 = extractCoords(x, 3);
+            const L3 = formatLeafDecomp(x, 0, 3);
+            const V3 = formatLeafDecomp(x, 0.5, 3);
+            const R3 = formatLeafDecomp(x, 1, 3);
+
+            const isTriplePrime2 = isPrime(c2.dl) && isPrime(c2.dv) && isPrime(c2.dr);
+            const goldbachSum = c2.dl + c2.dr;
+
+            const out = document.getElementById('prism-output');
+            out.innerHTML = `
+                <div class="p-3.5 rounded-xl bg-cosmos-950 border border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                    <div><span class="text-amber-300 font-bold">1. Classical Peano Regime ($\\mathbb{N}_1, m=1$):</span> Single scalar factorization: $${x} = ${pf1}$</div>
+                    <div class="text-cyan-300">Goldbach Depth Sum in $\\mathbb{N}_2$: $d_{0,2}+d_{1,2} = ${c2.dl} + ${c2.dr} = ${goldbachSum}$ ${isTriplePrime2 ? '<span class="ml-1 px-2 py-0.5 rounded bg-violet-500/30 text-violet-200 font-bold inline-block">&starf; Triple Prime!</span>' : ''}</div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                    <div class="p-4 rounded-2xl bg-cosmos-950 border border-emerald-500/30 space-y-2.5">
+                        <div class="flex flex-wrap justify-between items-center border-b border-slate-800 pb-2 gap-1">
+                            <span class="text-emerald-300 font-bold">2. Quadratic Foliation ($\\mathbb{N}_2, k=${c2.k}, r=${c2.r}$)</span>
+                            <span class="text-slate-400">$\\mathbf{d}_2(${x}) = (${c2.dl}, ${c2.dv}, ${c2.dr})$</span>
+                        </div>
+                        <div class="space-y-2">
+                            <div class="p-2.5 rounded-lg bg-slate-900/90 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-1">
+                                <span>$\\lambda=0$ ($L_{${c2.gl}}$): ${L2.status}</span>
+                                <span class="text-white font-bold">$${L2.expr}$</span>
+                            </div>
+                            <div class="p-2.5 rounded-lg bg-slate-900/90 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-1">
+                                <span>$\\lambda=1/2$ ($V_{${c2.gv}}$): ${V2.status}</span>
+                                <span class="text-white font-bold">$${V2.expr}$</span>
+                            </div>
+                            <div class="p-2.5 rounded-lg bg-slate-900/90 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-1">
+                                <span>$\\lambda=1$ ($R_{${c2.gr}}$): ${R2.status}</span>
+                                <span class="text-white font-bold">$${R2.expr}$</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="p-4 rounded-2xl bg-cosmos-950 border border-indigo-500/30 space-y-2.5">
+                        <div class="flex flex-wrap justify-between items-center border-b border-slate-800 pb-2 gap-1">
+                            <span class="text-indigo-300 font-bold">3. Cubic Foliation ($\\mathbb{N}_3, k=${c3.k}, r=${c3.r}$)</span>
+                            <span class="text-slate-400">$\\mathbf{d}_3(${x}) = (${c3.dl}, ${c3.dv}, ${c3.dr})$</span>
+                        </div>
+                        <div class="space-y-2">
+                            <div class="p-2.5 rounded-lg bg-slate-900/90 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-1">
+                                <span>$\\lambda=0$ ($L_{${c3.gl}}$): ${L3.status}</span>
+                                <span class="text-white font-bold">$${L3.expr}$</span>
+                            </div>
+                            <div class="p-2.5 rounded-lg bg-slate-900/90 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-1">
+                                <span>$\\lambda=1/2$ ($V_{${c3.gv}}$): ${V3.status}</span>
+                                <span class="text-white font-bold">$${V3.expr}$</span>
+                            </div>
+                            <div class="p-2.5 rounded-lg bg-slate-900/90 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-1">
+                                <span>$\\lambda=1$ ($R_{${c3.gr}}$): ${R3.status}</span>
+                                <span class="text-white font-bold">$${R3.expr}$</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            renderKaTeXElement(out);
+        }
+
+        // =====================================================================
+        // WIDGET 05: INTERACTIVE FIGURE 6 (CONICAL PRIME HOLOGRAPHY DIAGRAM)
+        // =====================================================================
+        function updateHolographyExplorer() {
+            const n = parseInt(document.getElementById('holo-n-slider').value, 10) || 11;
+            const kBulk = Math.floor(Math.sqrt(n));
+
+            const bulkPrimes = [];
+            for (let p = 2; p <= n; p++) {
+                if (isPrime(p)) bulkPrimes.push(p);
+            }
+
+            const shellStart = n * n;
+            const shellEnd = (n + 1) * (n + 1) - 1;
+            const shellPrimes = [];
+            for (let x = shellStart; x <= shellEnd; x++) {
+                if (isPrime(x)) shellPrimes.push(x);
+            }
+
+            document.getElementById('holo-n-label').innerText =
+                `n = ${n} • Interior Interval [1, ${n}] (k ≤ ${kBulk}) sieves Shell Ring S_${n} = [${shellStart}, ${shellEnd}]`;
+
+            const stats = document.getElementById('holography-stats');
+            stats.innerHTML = `
+                <div class="p-4 rounded-2xl bg-sky-950/30 border border-sky-500/40 space-y-1.5">
+                    <div class="flex justify-between items-center">
+                        <span class="text-sky-300 font-bold">Interior Interval $[1, ${n}]$</span>
+                        <span class="px-2 py-0.5 rounded bg-sky-500/20 text-sky-200 font-bold">$\\pi(${n}) = ${bulkPrimes.length}$</span>
+                    </div>
+                    <div class="text-[11px] text-slate-300 leading-relaxed max-h-20 overflow-y-auto custom-scrollbar">
+                        Sieve Primes: ${bulkPrimes.join(', ')}
+                    </div>
+                </div>
+
+                <div class="p-4 rounded-2xl bg-rose-950/30 border border-rose-500/40 space-y-1.5">
+                    <div class="flex justify-between items-center">
+                        <span class="text-rose-300 font-bold">Shell Ring $S_{${n}} = [${shellStart}, ${shellEnd}]$</span>
+                        <span class="px-2 py-0.5 rounded bg-rose-500/20 text-rose-200 font-bold">$|\\mathcal{P}(S_{${n}})| = ${shellPrimes.length}$</span>
+                    </div>
+                    <div class="text-[11px] text-slate-300 leading-relaxed max-h-20 overflow-y-auto custom-scrollbar">
+                        Prime Packet: ${shellPrimes.join(', ')}
+                    </div>
+                </div>
+
+                <div class="p-4 rounded-2xl bg-indigo-950/30 border border-indigo-500/40 space-y-1.5 flex flex-col justify-between">
+                    <div class="flex justify-between items-center">
+                        <span class="text-indigo-300 font-bold">Holographic Balance</span>
+                        <span class="text-brand-300 font-bold">$n / \\ln n \\approx ${(n / Math.log(n)).toFixed(1)}$</span>
+                    </div>
+                    <div class="text-[11px] text-slate-300">
+                        Exact Local Prime-Depth Count on $S_{${n}}$: $|\\mathcal{D}_{\\lambda,2} \\cap S_{${n}}| = \\pi(${n}) + \\pi(${n - 1}) = ${bulkPrimes.length + (isPrime(n) ? bulkPrimes.length - 1 : bulkPrimes.length)}$.
+                    </div>
+                </div>
+            `;
+            renderKaTeXElement(stats);
+            drawFigure6ConicalHolography(n, kBulk, bulkPrimes, shellPrimes);
+        }
+
+        function drawFigure6ConicalHolography(n, kBulk, bulkPrimes, shellPrimes) {
+            const canvas = document.getElementById('holography-cone-canvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Geometry matching Figure 6 of the paper
+            const apexX = 55;
+            const apexY = 170;
+            const coneLen = 490;
+            const maxR = 112;
+            const maxRx = 42;
+
+            const kMidRatio = 0.86;
+            const kBulkRatio = 0.40;
+
+            const xMax = apexX + coneLen;
+            const xRing = apexX + coneLen * kMidRatio;
+            const ryRing = maxR * kMidRatio;
+            const rxRing = maxRx * kMidRatio;
+
+            const xBulk = apexX + coneLen * kBulkRatio;
+            const ryBulk = maxR * kBulkRatio;
+            const rxBulk = maxRx * kBulkRatio;
+
+            // 1. Outer Cone Back Dashed Arc
+            ctx.strokeStyle = 'rgba(148, 163, 184, 0.3)';
+            ctx.lineWidth = 1.5;
+            ctx.setLineDash([5, 5]);
+            ctx.beginPath();
+            ctx.ellipse(xMax, apexY, maxRx, maxR, 0, Math.PI / 2, (3 * Math.PI) / 2);
+            ctx.stroke();
+            ctx.setLineDash([]);
+
+            // Outer Cone Slant Lines & Front Arc
+            ctx.strokeStyle = 'rgba(148, 163, 184, 0.45)';
+            ctx.beginPath();
+            ctx.moveTo(apexX, apexY);
+            ctx.lineTo(xMax, apexY - maxR);
+            ctx.moveTo(apexX, apexY);
+            ctx.lineTo(xMax, apexY + maxR);
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.ellipse(xMax, apexY, maxRx, maxR, 0, -Math.PI / 2, Math.PI / 2);
+            ctx.stroke();
+
+            // Central Dash-Dot Axis (Shell Index k)
+            ctx.strokeStyle = 'rgba(148, 163, 184, 0.45)';
+            ctx.setLineDash([8, 4, 2, 4]);
+            ctx.beginPath();
+            ctx.moveTo(apexX - 25, apexY);
+            ctx.lineTo(xMax + 48, apexY);
+            ctx.stroke();
+            ctx.setLineDash([]);
+            ctx.fillStyle = '#cbd5e1';
+            ctx.font = '11px monospace';
+            ctx.textAlign = 'left';
+            ctx.fillText('Shell Index k', xMax + 52, apexY + 4);
+
+            // 2. Blue Shaded Interior Cone [1, n] (k <= floor(sqrt(n)))
+            ctx.fillStyle = 'rgba(56, 189, 248, 0.16)';
+            ctx.beginPath();
+            ctx.moveTo(apexX, apexY);
+            ctx.lineTo(xBulk, apexY - ryBulk);
+            ctx.ellipse(xBulk, apexY, rxBulk, ryBulk, 0, -Math.PI / 2, Math.PI / 2);
+            ctx.closePath();
+            ctx.fill();
+
+            // Blue Interior Cone Boundary Ring (Front Solid, Back Dashed)
+            ctx.strokeStyle = '#38bdf8';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.ellipse(xBulk, apexY, rxBulk, ryBulk, 0, -Math.PI / 2, Math.PI / 2);
+            ctx.stroke();
+
+            ctx.setLineDash([4, 4]);
+            ctx.beginPath();
+            ctx.ellipse(xBulk, apexY, rxBulk, ryBulk, 0, Math.PI / 2, (3 * Math.PI) / 2);
+            ctx.stroke();
+            ctx.setLineDash([]);
+
+            // Plot Blue Sieve Prime Dots inside the Interior Cone
+            bulkPrimes.forEach((p) => {
+                const c = extractCoords(p, 2);
+                const frac = Math.min(0.95, Math.max(0.18, p / (n + 1)));
+                const px = apexX + frac * (xBulk - apexX);
+                const localRy = frac * ryBulk;
+                const localRx = frac * rxBulk;
+                const angle = c.k > 0 ? (Math.PI * c.gv) / c.k : 0;
+                const dotX = px + localRx * 0.45 * Math.cos(angle);
+                const dotY = apexY + localRy * 0.82 * Math.sin(angle);
+
+                ctx.fillStyle = '#38bdf8';
+                ctx.beginPath();
+                ctx.arc(dotX, dotY, 3.2, 0, Math.PI * 2);
+                ctx.fill();
+            });
+
+            // Callout Label & Arrow for Interior Interval [1, n]
+            ctx.fillStyle = '#38bdf8';
+            ctx.font = 'bold 11px monospace';
+            ctx.textAlign = 'center';
+            ctx.fillText(`Interior Interval [1, ${n}] (k ≤ ⌊√${n}⌋ = ${kBulk})`, xBulk - 20, apexY - ryBulk - 38);
+            ctx.font = '11px monospace';
+            ctx.fillStyle = '#bae6fd';
+            ctx.fillText(`Sieve Primes = π(${n}) = ${bulkPrimes.length}`, xBulk - 20, apexY - ryBulk - 22);
+
+            ctx.strokeStyle = '#38bdf8';
+            ctx.lineWidth = 1.5;
+            ctx.beginPath();
+            ctx.moveTo(xBulk - 20, apexY - ryBulk - 16);
+            ctx.lineTo(apexX + (xBulk - apexX) * 0.68, apexY - ryBulk * 0.45);
+            ctx.stroke();
+
+            // 3. Red Shell Ring S_n at k = n (Back Dashed, Front Solid)
+            ctx.strokeStyle = '#f43f5e';
+            ctx.lineWidth = 2.5;
+            ctx.setLineDash([5, 5]);
+            ctx.beginPath();
+            ctx.ellipse(xRing, apexY, rxRing, ryRing, 0, Math.PI / 2, (3 * Math.PI) / 2);
+            ctx.stroke();
+            ctx.setLineDash([]);
+
+            ctx.beginPath();
+            ctx.ellipse(xRing, apexY, rxRing, ryRing, 0, -Math.PI / 2, Math.PI / 2);
+            ctx.stroke();
+
+            // Plot Red Prime Dots on Shell Ring S_n at their conical angles
+            shellPrimes.forEach((p) => {
+                const gv = p - (n * n + n);
+                const theta = (Math.PI * gv) / n;
+                const px = xRing + rxRing * Math.cos(theta);
+                const py = apexY + ryRing * Math.sin(theta);
+
+                ctx.fillStyle = '#fb7185';
+                ctx.beginPath();
+                ctx.arc(px, py, 3.8, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.strokeStyle = '#040711';
+                ctx.lineWidth = 1;
+                ctx.stroke();
+            });
+
+            // Callout Label & Arrow for Shell Ring S_n
+            ctx.fillStyle = '#fb7185';
+            ctx.font = 'bold 11px monospace';
+            ctx.textAlign = 'center';
+            ctx.fillText(`Shell Ring S_${n} (k = ${n}, integers ${n * n} to ${(n + 1) * (n + 1) - 1})`, xRing - 55, apexY + ryRing + 30);
+            ctx.font = '11px monospace';
+            ctx.fillStyle = '#fecdd3';
+            ctx.fillText(`Prime Packet |P(S_${n})| = π((${n}+1)²) - π(${n}²) = ${shellPrimes.length}`, xRing - 55, apexY + ryRing + 46);
+
+            ctx.strokeStyle = '#fb7185';
+            ctx.lineWidth = 1.5;
+            ctx.beginPath();
+            ctx.moveTo(xRing - 35, apexY + ryRing + 16);
+            ctx.lineTo(xRing - 4, apexY + ryRing - 6);
+            ctx.stroke();
+
+            // 4. Right-Hand Boxed Formula Callout (matching Figure 6)
+            const boxX = xMax + 58;
+            const boxY = apexY - 58;
+            const boxW = 195;
+            const boxH = 44;
+            ctx.fillStyle = '#0f172a';
+            ctx.strokeStyle = '#2dd4bf';
+            ctx.lineWidth = 1.5;
+            ctx.fillRect(boxX, boxY, boxW, boxH);
+            ctx.strokeRect(boxX, boxY, boxW, boxH);
+
+            ctx.fillStyle = '#f8fafc';
+            ctx.font = 'bold 12px monospace';
+            ctx.textAlign = 'center';
+            ctx.fillText('π((n+1)²) - π(n²) ~ π(n)', boxX + boxW / 2, boxY + 18);
+            ctx.fillStyle = '#5eead4';
+            ctx.font = '11px monospace';
+            ctx.fillText(`|P(S_${n})| = ${shellPrimes.length}  vs  π(${n}) = ${bulkPrimes.length}`, boxX + boxW / 2, boxY + 34);
+        }
+
+        // =====================================================================
+        // READER COMMENTS & SUBSCRIPTION HANDLERS
+        // =====================================================================
+        const defaultComments = [
+            {
+                name: 'Editorial Note',
+                date: 'Oct 2026',
+                body: 'Welcome to the interactive portal for "Geometry of Integers". Use the widgets above to explore how granting the integers a second degree of freedom unfolds arithmetic, primality, and discrete curvature.'
+            }
+        ];
+
+        function loadComments() {
+            let stored = [];
+            try {
+                stored = JSON.parse(localStorage.getItem('nmc_comments') || '[]');
+            } catch (e) { stored = []; }
+            const all = [...stored, ...defaultComments];
+            const list = document.getElementById('comments-list');
+            if (!list) return;
+            list.innerHTML = all.map(c => `
+                <div class="p-3.5 rounded-xl bg-cosmos-950/90 border border-slate-800 space-y-1 font-mono text-xs">
+                    <div class="flex justify-between text-[11px] text-brand-300">
+                        <span class="font-bold">${c.name}</span>
+                        <span class="text-slate-500">${c.date}</span>
+                    </div>
+                    <p class="text-slate-300 font-sans text-xs leading-relaxed">${c.body}</p>
+                </div>
+            `).join('');
+        }
+
+        function handleCommentSubmit(e) {
+            e.preventDefault();
+            const name = document.getElementById('comment-name').value.trim();
+            const body = document.getElementById('comment-body').value.trim();
+            if (!name || !body) return;
+
+            let stored = [];
+            try {
+                stored = JSON.parse(localStorage.getItem('nmc_comments') || '[]');
+            } catch (err) { stored = []; }
+
+            stored.unshift({
+                name,
+                date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
+                body
+            });
+            try { localStorage.setItem('nmc_comments', JSON.stringify(stored)); } catch (err) {}
+
+            document.getElementById('comment-body').value = '';
+            const status = document.getElementById('comment-status');
+            status.classList.remove('hidden');
+            setTimeout(() => status.classList.add('hidden'), 4000);
+            loadComments();
+        }
+
+        function emailCommentToAuthor() {
+            const name = document.getElementById('comment-name').value.trim() || 'Reader';
+            const body = document.getElementById('comment-body').value.trim() || '';
+            const subject = encodeURIComponent(`Comment on Geometry of Integers from ${name}`);
+            const mailBody = encodeURIComponent(body);
+            window.location.href = `mailto:hassan.baloui@gmail.com?subject=${subject}&body=${mailBody}`;
+        }
+
+        function handleSubscribeSubmit(e) {
+            e.preventDefault();
+            const email = document.getElementById('sub-email').value.trim();
+            if (!email) return;
+            const status = document.getElementById('sub-status');
+            status.innerText = `Subscribed (${email})! Opening confirmation email...`;
+            status.classList.remove('hidden');
+            const subject = encodeURIComponent('Subscribe to New Mathematical Concepts');
+            const body = encodeURIComponent(`Please subscribe ${email} to future updates and papers on www.new-mathematical-concepts.org.`);
+            window.location.href = `mailto:hassan.baloui@gmail.com?subject=${subject}&body=${body}`;
+            document.getElementById('sub-email').value = '';
+        }
+
+        // --- INITIALIZE ALL STORYTELLING WIDGETS ON LOAD ---
+        window.addEventListener('DOMContentLoaded', () => {
+            renderKaTeXElement(document.body);
+            initUnfolder();
+            initInspectorEvents();
+            updateCoordinateInspector();
+            computeGeodesicRoute();
+            runFoliatedCalculator();
+            runFactorizationPrism();
+            updateHolographyExplorer();
+            loadComments();
+        });
+    </script>
+</body>
+</html>
